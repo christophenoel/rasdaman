@@ -67,7 +67,7 @@ static const char rcsid[] = "@(#)qlparser, yacc parser: $Header: /home/rasdev/CV
 extern ServerComm::ClientTblElt* currentClientTblElt;
 extern ParseInfo *currInfo;
 
-void   yyerror( const char* s );
+void   yyerror(void* mflag, const char* s );
 
 extern int  yylex();
 extern unsigned int lineNo;
@@ -270,7 +270,7 @@ struct QtUpdateSpecElement
 // marray2 with multiple intervals
 %type <mddIntervalListType>   ivList
 %type <mddIntervalType>	      iv marray_head
-				
+%parse-param {void * YYPARSE_PARAM}
 %%  // rules section
 /*--------------------------------------------------------------------
  *				Grammar starts here 
@@ -980,7 +980,7 @@ concatExp: CONCAT mddList ALONG intLitExp
 	{
 	  if( $4.negative )
 	    if( $4.svalue < 0 )
-	      yyerror("non negative integer expected");
+	      yyerror(mflag, "non negative integer expected");
 	    else
 	      $$ = new QtConcat( $2, (unsigned int)$4.svalue );
 	  else
@@ -1789,7 +1789,7 @@ structSelection: DOT attributeIdent
 	{
 	  if( $2.negative )
 	    if( $2.svalue < 0 )
-	      yyerror("non negative integer expected");
+	      yyerror(mflag, "non negative integer expected");
 	    else
 	      $$ = new QtDot( (unsigned int)$2.svalue );
 	  else
@@ -2996,7 +2996,7 @@ intArray : IntegerLit
  */	
 %%  // C code section
 
-void yyerror( const char* /*s*/ )
+void yyerror(void* /*mflag*/, const char* /*s*/ )
 {
   if( !parseError ) {
 
