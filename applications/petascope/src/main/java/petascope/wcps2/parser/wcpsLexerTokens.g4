@@ -108,6 +108,6 @@ REAL_NUMBER_CONSTANT:'-'?[0-9]+('.'[0-9]*)?;
 IDENTIFIER: [$a-zA-Z0-9_]+; // added $ for backwards compatibility with WCPS1
 NAME: [a-z|A-Z]+;
 //FORMAT_NAME: replaced with STRING_LITERAL for backward compatibility with WCPS1. The regex for a valid mime type is: '"'[a-zA-Z0-9!#$&.+-^_]+'/'[a-zA-Z0-9!#$&.+-^_]+'"'
-STRING_LITERAL: '"'[a-zA-Z0-9!#$&.+-^_]+'"';
+STRING_LITERAL: '"'[a-zA-Z0-9!#$&.+-^_ ]+'"';
 WS: [ \n\t\r]+ -> skip;
 //for testing

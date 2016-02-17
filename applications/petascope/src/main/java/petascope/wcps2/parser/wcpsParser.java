@@ -15,76 +15,76 @@ public class wcpsParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		FOR=1, ABSOLUTE_VALUE=2, ADD=3, ALL=4, AND=5, ARCSIN=6, ARCCOS=7, ARCTAN=8,
-		AVG=9, BIT=10, COLON=11, COMMA=12, CONDENSE=13, COS=14, COSH=15, COUNT=16,
-		COVERAGE=17, COVERAGE_VARIABLE_NAME_PREFIX=18, CRS_TRANSFORM=19, DECODE=20,
-		DESCRIBE_COVERAGE=21, DIVISION=22, DOT=23, ENCODE=24, EQUAL=25, EXP=26,
-		EXTEND=27, FALSE=28, GREATER_THAN=29, GREATER_OR_EQUAL_THAN=30, IMAGINARY_PART=31,
-		ID=32, IMGCRSDOMAIN=33, IN=34, LEFT_BRACE=35, LEFT_BRACKET=36, LEFT_PARANTHESIS=37,
-		LN=38, LIST=39, LOG=40, LOWER_THAN=41, LOWER_OR_EQUAL_THAN=42, MAX=43,
-		MIN=44, MINUS=45, MULTIPLICATION=46, NOT=47, NOT_EQUAL=48, OR=49, OVER=50,
-		OVERLAY=51, PLUS=52, POWER=53, REAL_PART=54, ROUND=55, RETURN=56, RIGHT_BRACE=57,
-		RIGHT_BRACKET=58, RIGHT_PARANTHESIS=59, SCALE=60, SEMICOLON=61, SIN=62,
-		SINH=63, SLICE=64, SOME=65, SQUARE_ROOT=66, STRUCT=67, TAN=68, TANH=69,
-		TRIM=70, TRUE=71, USING=72, VALUE=73, VALUES=74, WHERE=75, XOR=76, REAL_NUMBER_CONSTANT=77,
+		FOR=1, ABSOLUTE_VALUE=2, ADD=3, ALL=4, AND=5, ARCSIN=6, ARCCOS=7, ARCTAN=8, 
+		AVG=9, BIT=10, COLON=11, COMMA=12, CONDENSE=13, COS=14, COSH=15, COUNT=16, 
+		COVERAGE=17, COVERAGE_VARIABLE_NAME_PREFIX=18, CRS_TRANSFORM=19, DECODE=20, 
+		DESCRIBE_COVERAGE=21, DIVISION=22, DOT=23, ENCODE=24, EQUAL=25, EXP=26, 
+		EXTEND=27, FALSE=28, GREATER_THAN=29, GREATER_OR_EQUAL_THAN=30, IMAGINARY_PART=31, 
+		ID=32, IMGCRSDOMAIN=33, IN=34, LEFT_BRACE=35, LEFT_BRACKET=36, LEFT_PARANTHESIS=37, 
+		LN=38, LIST=39, LOG=40, LOWER_THAN=41, LOWER_OR_EQUAL_THAN=42, MAX=43, 
+		MIN=44, MINUS=45, MULTIPLICATION=46, NOT=47, NOT_EQUAL=48, OR=49, OVER=50, 
+		OVERLAY=51, PLUS=52, POWER=53, REAL_PART=54, ROUND=55, RETURN=56, RIGHT_BRACE=57, 
+		RIGHT_BRACKET=58, RIGHT_PARANTHESIS=59, SCALE=60, SEMICOLON=61, SIN=62, 
+		SINH=63, SLICE=64, SOME=65, SQUARE_ROOT=66, STRUCT=67, TAN=68, TANH=69, 
+		TRIM=70, TRUE=71, USING=72, VALUE=73, VALUES=74, WHERE=75, XOR=76, REAL_NUMBER_CONSTANT=77, 
 		IDENTIFIER=78, NAME=79, STRING_LITERAL=80, WS=81;
 	public static final String[] tokenNames = {
-		"<INVALID>", "FOR", "ABSOLUTE_VALUE", "ADD", "ALL", "AND", "ARCSIN", "ARCCOS",
-		"ARCTAN", "AVG", "BIT", "':'", "','", "CONDENSE", "COS", "COSH", "COUNT",
-		"COVERAGE", "'$'", "CRS_TRANSFORM", "DECODE", "DESCRIBE_COVERAGE", "'/'",
-		"'.'", "ENCODE", "'='", "EXP", "EXTEND", "FALSE", "'>'", "'>='", "IMAGINARY_PART",
-		"ID", "IMGCRSDOMAIN", "IN", "'{'", "'['", "'('", "LN", "LIST", "LOG",
-		"'<'", "'<='", "MAX", "MIN", "'-'", "'*'", "NOT", "'!='", "OR", "OVER",
-		"OVERLAY", "'+'", "POWER", "REAL_PART", "ROUND", "RETURN", "'}'", "']'",
-		"')'", "SCALE", "';'", "SIN", "SINH", "SLICE", "SOME", "SQUARE_ROOT",
-		"STRUCT", "TAN", "TANH", "TRIM", "TRUE", "USING", "VALUE", "VALUES", "WHERE",
-		"XOR", "REAL_NUMBER_CONSTANT", "IDENTIFIER", "NAME", "STRING_LITERAL",
+		"<INVALID>", "FOR", "ABSOLUTE_VALUE", "ADD", "ALL", "AND", "ARCSIN", "ARCCOS", 
+		"ARCTAN", "AVG", "BIT", "':'", "','", "CONDENSE", "COS", "COSH", "COUNT", 
+		"COVERAGE", "'$'", "CRS_TRANSFORM", "DECODE", "DESCRIBE_COVERAGE", "'/'", 
+		"'.'", "ENCODE", "'='", "EXP", "EXTEND", "FALSE", "'>'", "'>='", "IMAGINARY_PART", 
+		"ID", "IMGCRSDOMAIN", "IN", "'{'", "'['", "'('", "LN", "LIST", "LOG", 
+		"'<'", "'<='", "MAX", "MIN", "'-'", "'*'", "NOT", "'!='", "OR", "OVER", 
+		"OVERLAY", "'+'", "POWER", "REAL_PART", "ROUND", "RETURN", "'}'", "']'", 
+		"')'", "SCALE", "';'", "SIN", "SINH", "SLICE", "SOME", "SQUARE_ROOT", 
+		"STRUCT", "TAN", "TANH", "TRIM", "TRUE", "USING", "VALUE", "VALUES", "WHERE", 
+		"XOR", "REAL_NUMBER_CONSTANT", "IDENTIFIER", "NAME", "STRING_LITERAL", 
 		"WS"
 	};
 	public static final int
-		RULE_wcpsQuery = 0, RULE_forClauseList = 1, RULE_forClause = 2, RULE_whereClause = 3,
-		RULE_returnClause = 4, RULE_coverageVariableName = 5, RULE_processingExpression = 6,
-		RULE_scalarExpression = 7, RULE_booleanScalarExpression = 8, RULE_booleanUnaryOperator = 9,
-		RULE_booleanConstant = 10, RULE_booleanOperator = 11, RULE_numericalComparissonOperator = 12,
-		RULE_stringOperator = 13, RULE_stringScalarExpression = 14, RULE_starExpression = 15,
-		RULE_numericalScalarExpression = 16, RULE_complexNumberConstant = 17,
-		RULE_numericalOperator = 18, RULE_numericalUnaryOperation = 19, RULE_trigonometricOperator = 20,
-		RULE_getComponentExpression = 21, RULE_coverageIdExpression = 22, RULE_describeCoverageExpression = 23,
-		RULE_encodedCoverageExpression = 24, RULE_decodeCoverageExpression = 25,
-		RULE_coverageExpression = 26, RULE_coverageArithmeticOperator = 27, RULE_unaryArithmeticExpressionOperator = 28,
-		RULE_unaryArithmeticExpression = 29, RULE_trigonometricExpression = 30,
-		RULE_exponentialExpressionOperator = 31, RULE_exponentialExpression = 32,
-		RULE_unaryBooleanExpression = 33, RULE_rangeType = 34, RULE_castExpression = 35,
-		RULE_fieldName = 36, RULE_rangeConstructorExpression = 37, RULE_crsTransformExpression = 38,
-		RULE_dimensionPointList = 39, RULE_dimensionPointElement = 40, RULE_dimensionIntervalList = 41,
-		RULE_dimensionIntervalElement = 42, RULE_dimensionCrsList = 43, RULE_dimensionCrsElement = 44,
-		RULE_fieldInterpolationList = 45, RULE_fieldInterpolationListElement = 46,
-		RULE_interpolationMethod = 47, RULE_nullResistance = 48, RULE_interpolationType = 49,
-		RULE_coverageConstructorExpression = 50, RULE_axisIterator = 51, RULE_intervalExpression = 52,
-		RULE_coverageConstantExpression = 53, RULE_axisSpec = 54, RULE_condenseExpression = 55,
-		RULE_reduceBooleanExpressionOperator = 56, RULE_reduceNumericalExpressionOperator = 57,
-		RULE_reduceBooleanExpression = 58, RULE_reduceNumericalExpression = 59,
-		RULE_reduceExpression = 60, RULE_condenseExpressionOperator = 61, RULE_generalCondenseExpression = 62,
+		RULE_wcpsQuery = 0, RULE_forClauseList = 1, RULE_forClause = 2, RULE_whereClause = 3, 
+		RULE_returnClause = 4, RULE_coverageVariableName = 5, RULE_processingExpression = 6, 
+		RULE_scalarExpression = 7, RULE_booleanScalarExpression = 8, RULE_booleanUnaryOperator = 9, 
+		RULE_booleanConstant = 10, RULE_booleanOperator = 11, RULE_numericalComparissonOperator = 12, 
+		RULE_stringOperator = 13, RULE_stringScalarExpression = 14, RULE_starExpression = 15, 
+		RULE_numericalScalarExpression = 16, RULE_complexNumberConstant = 17, 
+		RULE_numericalOperator = 18, RULE_numericalUnaryOperation = 19, RULE_trigonometricOperator = 20, 
+		RULE_getComponentExpression = 21, RULE_coverageIdExpression = 22, RULE_describeCoverageExpression = 23, 
+		RULE_encodedCoverageExpression = 24, RULE_decodeCoverageExpression = 25, 
+		RULE_coverageExpression = 26, RULE_coverageArithmeticOperator = 27, RULE_unaryArithmeticExpressionOperator = 28, 
+		RULE_unaryArithmeticExpression = 29, RULE_trigonometricExpression = 30, 
+		RULE_exponentialExpressionOperator = 31, RULE_exponentialExpression = 32, 
+		RULE_unaryBooleanExpression = 33, RULE_rangeType = 34, RULE_castExpression = 35, 
+		RULE_fieldName = 36, RULE_rangeConstructorExpression = 37, RULE_crsTransformExpression = 38, 
+		RULE_dimensionPointList = 39, RULE_dimensionPointElement = 40, RULE_dimensionIntervalList = 41, 
+		RULE_dimensionIntervalElement = 42, RULE_dimensionCrsList = 43, RULE_dimensionCrsElement = 44, 
+		RULE_fieldInterpolationList = 45, RULE_fieldInterpolationListElement = 46, 
+		RULE_interpolationMethod = 47, RULE_nullResistance = 48, RULE_interpolationType = 49, 
+		RULE_coverageConstructorExpression = 50, RULE_axisIterator = 51, RULE_intervalExpression = 52, 
+		RULE_coverageConstantExpression = 53, RULE_axisSpec = 54, RULE_condenseExpression = 55, 
+		RULE_reduceBooleanExpressionOperator = 56, RULE_reduceNumericalExpressionOperator = 57, 
+		RULE_reduceBooleanExpression = 58, RULE_reduceNumericalExpression = 59, 
+		RULE_reduceExpression = 60, RULE_condenseExpressionOperator = 61, RULE_generalCondenseExpression = 62, 
 		RULE_crsName = 63, RULE_axisName = 64, RULE_constant = 65;
 	public static final String[] ruleNames = {
-		"wcpsQuery", "forClauseList", "forClause", "whereClause", "returnClause",
-		"coverageVariableName", "processingExpression", "scalarExpression", "booleanScalarExpression",
-		"booleanUnaryOperator", "booleanConstant", "booleanOperator", "numericalComparissonOperator",
-		"stringOperator", "stringScalarExpression", "starExpression", "numericalScalarExpression",
-		"complexNumberConstant", "numericalOperator", "numericalUnaryOperation",
-		"trigonometricOperator", "getComponentExpression", "coverageIdExpression",
-		"describeCoverageExpression", "encodedCoverageExpression", "decodeCoverageExpression",
-		"coverageExpression", "coverageArithmeticOperator", "unaryArithmeticExpressionOperator",
-		"unaryArithmeticExpression", "trigonometricExpression", "exponentialExpressionOperator",
-		"exponentialExpression", "unaryBooleanExpression", "rangeType", "castExpression",
-		"fieldName", "rangeConstructorExpression", "crsTransformExpression", "dimensionPointList",
-		"dimensionPointElement", "dimensionIntervalList", "dimensionIntervalElement",
-		"dimensionCrsList", "dimensionCrsElement", "fieldInterpolationList", "fieldInterpolationListElement",
-		"interpolationMethod", "nullResistance", "interpolationType", "coverageConstructorExpression",
-		"axisIterator", "intervalExpression", "coverageConstantExpression", "axisSpec",
-		"condenseExpression", "reduceBooleanExpressionOperator", "reduceNumericalExpressionOperator",
-		"reduceBooleanExpression", "reduceNumericalExpression", "reduceExpression",
-		"condenseExpressionOperator", "generalCondenseExpression", "crsName",
+		"wcpsQuery", "forClauseList", "forClause", "whereClause", "returnClause", 
+		"coverageVariableName", "processingExpression", "scalarExpression", "booleanScalarExpression", 
+		"booleanUnaryOperator", "booleanConstant", "booleanOperator", "numericalComparissonOperator", 
+		"stringOperator", "stringScalarExpression", "starExpression", "numericalScalarExpression", 
+		"complexNumberConstant", "numericalOperator", "numericalUnaryOperation", 
+		"trigonometricOperator", "getComponentExpression", "coverageIdExpression", 
+		"describeCoverageExpression", "encodedCoverageExpression", "decodeCoverageExpression", 
+		"coverageExpression", "coverageArithmeticOperator", "unaryArithmeticExpressionOperator", 
+		"unaryArithmeticExpression", "trigonometricExpression", "exponentialExpressionOperator", 
+		"exponentialExpression", "unaryBooleanExpression", "rangeType", "castExpression", 
+		"fieldName", "rangeConstructorExpression", "crsTransformExpression", "dimensionPointList", 
+		"dimensionPointElement", "dimensionIntervalList", "dimensionIntervalElement", 
+		"dimensionCrsList", "dimensionCrsElement", "fieldInterpolationList", "fieldInterpolationListElement", 
+		"interpolationMethod", "nullResistance", "interpolationType", "coverageConstructorExpression", 
+		"axisIterator", "intervalExpression", "coverageConstantExpression", "axisSpec", 
+		"condenseExpression", "reduceBooleanExpressionOperator", "reduceNumericalExpressionOperator", 
+		"reduceBooleanExpression", "reduceNumericalExpression", "reduceExpression", 
+		"condenseExpressionOperator", "generalCondenseExpression", "crsName", 
 		"axisName", "constant"
 	};
 
@@ -109,7 +109,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_wcpsQuery; }
-
+	 
 		public WcpsQueryContext() { }
 		public void copyFrom(WcpsQueryContext ctx) {
 			super.copyFrom(ctx);
@@ -173,7 +173,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_forClauseList; }
-
+	 
 		public ForClauseListContext() { }
 		public void copyFrom(ForClauseListContext ctx) {
 			super.copyFrom(ctx);
@@ -243,7 +243,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_forClause; }
-
+	 
 		public ForClauseContext() { }
 		public void copyFrom(ForClauseContext ctx) {
 			super.copyFrom(ctx);
@@ -302,7 +302,7 @@ public class wcpsParser extends Parser {
 					setState(153); match(COMMA);
 					setState(154); match(IDENTIFIER);
 					}
-					}
+					} 
 				}
 				setState(159);
 				_errHandler.sync(this);
@@ -334,7 +334,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whereClause; }
-
+	 
 		public WhereClauseContext() { }
 		public void copyFrom(WhereClauseContext ctx) {
 			super.copyFrom(ctx);
@@ -380,7 +380,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_returnClause; }
-
+	 
 		public ReturnClauseContext() { }
 		public void copyFrom(ReturnClauseContext ctx) {
 			super.copyFrom(ctx);
@@ -426,7 +426,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_coverageVariableName; }
-
+	 
 		public CoverageVariableNameContext() { }
 		public void copyFrom(CoverageVariableNameContext ctx) {
 			super.copyFrom(ctx);
@@ -634,7 +634,7 @@ public class wcpsParser extends Parser {
 			this._p = _p;
 		}
 		@Override public int getRuleIndex() { return RULE_booleanScalarExpression; }
-
+	 
 		public BooleanScalarExpressionContext() { }
 		public void copyFrom(BooleanScalarExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -837,7 +837,7 @@ public class wcpsParser extends Parser {
 					setState(205); booleanOperator();
 					setState(206); booleanScalarExpression(0);
 					}
-					}
+					} 
 				}
 				setState(212);
 				_errHandler.sync(this);
@@ -1059,7 +1059,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_stringScalarExpression; }
-
+	 
 		public StringScalarExpressionContext() { }
 		public void copyFrom(StringScalarExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -1101,7 +1101,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_starExpression; }
-
+	 
 		public StarExpressionContext() { }
 		public void copyFrom(StarExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -1146,7 +1146,7 @@ public class wcpsParser extends Parser {
 			this._p = _p;
 		}
 		@Override public int getRuleIndex() { return RULE_numericalScalarExpression; }
-
+	 
 		public NumericalScalarExpressionContext() { }
 		public void copyFrom(NumericalScalarExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -1335,7 +1335,7 @@ public class wcpsParser extends Parser {
 					setState(244); numericalOperator();
 					setState(245); numericalScalarExpression(0);
 					}
-					}
+					} 
 				}
 				setState(251);
 				_errHandler.sync(this);
@@ -1359,7 +1359,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_complexNumberConstant; }
-
+	 
 		public ComplexNumberConstantContext() { }
 		public void copyFrom(ComplexNumberConstantContext ctx) {
 			super.copyFrom(ctx);
@@ -1596,7 +1596,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_coverageIdExpression; }
-
+	 
 		public CoverageIdExpressionContext() { }
 		public void copyFrom(CoverageIdExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -1646,7 +1646,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_describeCoverageExpression; }
-
+	 
 		public DescribeCoverageExpressionContext() { }
 		public void copyFrom(DescribeCoverageExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -1696,7 +1696,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_encodedCoverageExpression; }
-
+	 
 		public EncodedCoverageExpressionContext() { }
 		public void copyFrom(EncodedCoverageExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -1771,7 +1771,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_decodeCoverageExpression; }
-
+	 
 		public DecodeCoverageExpressionContext() { }
 		public void copyFrom(DecodeCoverageExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -1846,7 +1846,7 @@ public class wcpsParser extends Parser {
 			this._p = _p;
 		}
 		@Override public int getRuleIndex() { return RULE_coverageExpression; }
-
+	 
 		public CoverageExpressionContext() { }
 		public void copyFrom(CoverageExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -2499,7 +2499,7 @@ public class wcpsParser extends Parser {
 						}
 						break;
 					}
-					}
+					} 
 				}
 				setState(398);
 				_errHandler.sync(this);
@@ -2609,7 +2609,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_unaryArithmeticExpression; }
-
+	 
 		public UnaryArithmeticExpressionContext() { }
 		public void copyFrom(UnaryArithmeticExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -2661,7 +2661,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_trigonometricExpression; }
-
+	 
 		public TrigonometricExpressionContext() { }
 		public void copyFrom(TrigonometricExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -2754,7 +2754,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exponentialExpression; }
-
+	 
 		public ExponentialExpressionContext() { }
 		public void copyFrom(ExponentialExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -2806,7 +2806,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_unaryBooleanExpression; }
-
+	 
 		public UnaryBooleanExpressionContext() { }
 		public void copyFrom(UnaryBooleanExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -2943,7 +2943,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_castExpression; }
-
+	 
 		public CastExpressionContext() { }
 		public void copyFrom(CastExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -3035,7 +3035,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rangeConstructorExpression; }
-
+	 
 		public RangeConstructorExpressionContext() { }
 		public void copyFrom(RangeConstructorExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -3121,7 +3121,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_crsTransformExpression; }
-
+	 
 		public CrsTransformExpressionContext() { }
 		public void copyFrom(CrsTransformExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -3185,7 +3185,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_dimensionPointList; }
-
+	 
 		public DimensionPointListContext() { }
 		public void copyFrom(DimensionPointListContext ctx) {
 			super.copyFrom(ctx);
@@ -3251,7 +3251,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_dimensionPointElement; }
-
+	 
 		public DimensionPointElementContext() { }
 		public void copyFrom(DimensionPointElementContext ctx) {
 			super.copyFrom(ctx);
@@ -3317,7 +3317,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_dimensionIntervalList; }
-
+	 
 		public DimensionIntervalListContext() { }
 		public void copyFrom(DimensionIntervalListContext ctx) {
 			super.copyFrom(ctx);
@@ -3383,7 +3383,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_dimensionIntervalElement; }
-
+	 
 		public DimensionIntervalElementContext() { }
 		public void copyFrom(DimensionIntervalElementContext ctx) {
 			super.copyFrom(ctx);
@@ -3502,7 +3502,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_dimensionCrsList; }
-
+	 
 		public DimensionCrsListContext() { }
 		public void copyFrom(DimensionCrsListContext ctx) {
 			super.copyFrom(ctx);
@@ -3572,7 +3572,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_dimensionCrsElement; }
-
+	 
 		public DimensionCrsElementContext() { }
 		public void copyFrom(DimensionCrsElementContext ctx) {
 			super.copyFrom(ctx);
@@ -3622,7 +3622,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fieldInterpolationList; }
-
+	 
 		public FieldInterpolationListContext() { }
 		public void copyFrom(FieldInterpolationListContext ctx) {
 			super.copyFrom(ctx);
@@ -3692,7 +3692,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fieldInterpolationListElement; }
-
+	 
 		public FieldInterpolationListElementContext() { }
 		public void copyFrom(FieldInterpolationListElementContext ctx) {
 			super.copyFrom(ctx);
@@ -3740,7 +3740,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_interpolationMethod; }
-
+	 
 		public InterpolationMethodContext() { }
 		public void copyFrom(InterpolationMethodContext ctx) {
 			super.copyFrom(ctx);
@@ -3834,7 +3834,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_interpolationType; }
-
+	 
 		public InterpolationTypeContext() { }
 		public void copyFrom(InterpolationTypeContext ctx) {
 			super.copyFrom(ctx);
@@ -3876,7 +3876,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_coverageConstructorExpression; }
-
+	 
 		public CoverageConstructorExpressionContext() { }
 		public void copyFrom(CoverageConstructorExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -3954,7 +3954,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_axisIterator; }
-
+	 
 		public AxisIteratorContext() { }
 		public void copyFrom(AxisIteratorContext ctx) {
 			super.copyFrom(ctx);
@@ -4002,7 +4002,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_intervalExpression; }
-
+	 
 		public IntervalExpressionContext() { }
 		public void copyFrom(IntervalExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -4121,7 +4121,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_coverageConstantExpression; }
-
+	 
 		public CoverageConstantExpressionContext() { }
 		public void copyFrom(CoverageConstantExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -4226,7 +4226,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_axisSpec; }
-
+	 
 		public AxisSpecContext() { }
 		public void copyFrom(AxisSpecContext ctx) {
 			super.copyFrom(ctx);
@@ -4410,7 +4410,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_reduceBooleanExpression; }
-
+	 
 		public ReduceBooleanExpressionContext() { }
 		public void copyFrom(ReduceBooleanExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -4462,7 +4462,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_reduceNumericalExpression; }
-
+	 
 		public ReduceNumericalExpressionContext() { }
 		public void copyFrom(ReduceNumericalExpressionContext ctx) {
 			super.copyFrom(ctx);
@@ -4614,7 +4614,7 @@ public class wcpsParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_generalCondenseExpression; }
-
+	 
 		public GeneralCondenseExpressionContext() { }
 		public void copyFrom(GeneralCondenseExpressionContext ctx) {
 			super.copyFrom(ctx);
