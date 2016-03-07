@@ -28,8 +28,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Translation class fo the range constructor expressions
- *
+ * Translation class for the range constructor expressions
+ * <code>
+ * for c in (COV) return encode( {red: c.red;    green: c.green;    blue: c.blue }, "png")
+ * </code>
+ * returns
+ * <code>
+ * select  { c.red, c.green, c.blue } from COV as c
+ * </code>
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
@@ -47,26 +53,12 @@ public class RangeConstructorExpression extends CoverageExpression {
     @Override
     public String toRasql() {
         List<String> translatedFields = new ArrayList<String>();
-        int index = 0;
         for (Map.Entry<String, CoverageExpression> entry : fieldStructure.entrySet()) {
-            translatedFields.add(entry.getValue().toRasql() + " * " + generateIdentityStruct(index, fieldStructure.entrySet().size()));
-            index++;
+            translatedFields.add(entry.getValue().toRasql());
         }
-        return TEMPLATE.replace("$fieldDefinitions", StringUtils.join(translatedFields, " + "));
-    }
-
-    private String generateIdentityStruct(int position, int size) {
-        List<String> parts = new ArrayList<String>(size);
-        for (int j = 0; j < size; j++) {
-            if (j == position) {
-                parts.add("1c");
-            } else {
-                parts.add("0c");
-            }
-        }
-        return "{" + StringUtils.join(parts, ",") + "}";
+        return TEMPLATE.replace("$fieldDefinitions", StringUtils.join(translatedFields, ","));
     }
 
     private final Map<String, CoverageExpression> fieldStructure;
-    private final String TEMPLATE = "($fieldDefinitions)";
+    private final String TEMPLATE = "{$fieldDefinitions}";
 }
