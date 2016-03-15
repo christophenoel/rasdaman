@@ -47,9 +47,9 @@ public class DimensionIntervalList extends IParseTreeNode {
      *
      * @param intervals a list of trim intervals
      */
-    public DimensionIntervalList(List<TrimDimensionInterval> intervals) {
+    public DimensionIntervalList(List<SubsetDimension> intervals) {
         this.intervals = intervals;
-        for(TrimDimensionInterval interval: intervals){
+        for(SubsetDimension interval: intervals){
             addChild(interval);
         }
     }
@@ -58,7 +58,7 @@ public class DimensionIntervalList extends IParseTreeNode {
     public String toRasql() {
         List<String> dimensionIntervalsString = new ArrayList<String>(intervals.size());
         Collections.sort(intervals);
-        for (TrimDimensionInterval interval : intervals) {
+        for (SubsetDimension interval : intervals) {
             dimensionIntervalsString.add(interval.toRasql());
         }
         return StringUtils.join(dimensionIntervalsString, ",");
@@ -69,7 +69,7 @@ public class DimensionIntervalList extends IParseTreeNode {
      *
      * @return the trim intervals
      */
-    public List<TrimDimensionInterval> getIntervals() {
+    public List<SubsetDimension> getIntervals() {
         return intervals;
     }
 
@@ -79,5 +79,5 @@ public class DimensionIntervalList extends IParseTreeNode {
         return new StringBuilder("(").append(intervals.toString()).append(")").toString();
     }
 
-    private final List<TrimDimensionInterval> intervals;
+    private final List<SubsetDimension> intervals;
 }

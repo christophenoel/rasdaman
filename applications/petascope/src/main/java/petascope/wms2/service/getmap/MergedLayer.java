@@ -32,7 +32,7 @@ import petascope.util.CrsUtil;
 import petascope.wcps.metadata.DomainElement;
 import petascope.wcps2.metadata.Coverage;
 import petascope.wcps2.metadata.CoverageRegistry;
-import petascope.wcps2.metadata.Interval;
+import petascope.wcps2.metadata.Subset;
 import petascope.wcps2.util.CrsComputer;
 import petascope.wms2.metadata.*;
 import petascope.wms2.service.exception.error.WMSInvalidBbox;
@@ -125,8 +125,8 @@ public class MergedLayer {
                             max = String.valueOf(this.boundingBox.getMaxy());
                         }
                         CrsComputer crsComputer = new CrsComputer(dom.getLabel(), crs,
-                            new Interval<String>(min, max), coverage, coverageRegistry);
-                        Interval<Long> indices = crsComputer.getPixelIndices(true);
+                            new Subset<String>(min, max), coverage, coverageRegistry);
+                        Subset<Long> indices = crsComputer.getPixelIndices(true);
                         rasdamanSubsets.add(new RasdamanSubset(dom.getOrder(), indices.getLowerLimit(), indices.getUpperLimit()));
                         index += 1;
                     }

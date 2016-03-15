@@ -24,7 +24,7 @@ package petascope.wcps2.processor;
 import petascope.wcps.metadata.DomainElement;
 import petascope.wcps2.metadata.Coverage;
 import petascope.wcps2.metadata.CoverageRegistry;
-import petascope.wcps2.metadata.Interval;
+import petascope.wcps2.metadata.Subset;
 import petascope.wcps2.translator.*;
 
 import java.util.List;
@@ -87,18 +87,18 @@ public class PetascopeAxesToRasdamanAxesTranslator implements IProcessor {
     private void processAxesOrder(DimensionIntervalList dimensionIntervals, List<DomainElement> domains, boolean addDefaultIfNotFound) {
         for (DomainElement domain : domains) {
             boolean found = false;
-            for (TrimDimensionInterval trimInterval : dimensionIntervals.getIntervals()) {
-                if (trimInterval.getAxisName().equalsIgnoreCase(domain.getLabel())) {
+             for (SubsetDimension subsetDimension : dimensionIntervals.getIntervals()) {
+                if (subsetDimension.getAxisName().equalsIgnoreCase(domain.getLabel())) {
                     found = true;
-                    trimInterval.setAxisPosition(domain.getOrder());
+                    subsetDimension.setAxisPosition(domain.getOrder());
                 }
             }
             if (!found && addDefaultIfNotFound) {
-                CoverageExpressionVariableName defaultVariable = new CoverageExpressionVariableName(TrimDimensionInterval.WHOLE_DIMENSION_SYMBOL, null);
-                TrimDimensionInterval fullInterval = new TrimDimensionInterval(domain.getLabel(), "", defaultVariable, defaultVariable);
-                fullInterval.setTrimInterval(new Interval<Long>(Long.MIN_VALUE, Long.MIN_VALUE));
-                fullInterval.setAxisPosition(domain.getOrder());
-                dimensionIntervals.getIntervals().add(fullInterval);
+                CoverageExpressionVariableName defaultVariable = new CoverageExpressionVariableName(SubsetDimension.WHOLE_DIMENSION_SYMBOL, null);
+                SubsetDimension fullSubsetDimension = new SubsetDimension(domain.getLabel(), "", defaultVariable, defaultVariable);
+                fullSubsetDimension.setSubset(new Subset<Long>(Long.MIN_VALUE, Long.MIN_VALUE));
+                fullSubsetDimension.setAxisPosition(domain.getOrder());
+                dimensionIntervals.getIntervals().add(fullSubsetDimension);
             }
         }
     }

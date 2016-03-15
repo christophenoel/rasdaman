@@ -24,7 +24,7 @@ package petascope.wcps2.processor;
 import petascope.wcps.metadata.DomainElement;
 import petascope.wcps2.metadata.Coverage;
 import petascope.wcps2.metadata.CoverageRegistry;
-import petascope.wcps2.metadata.Interval;
+import petascope.wcps2.metadata.Subset;
 import petascope.wcps2.translator.*;
 import petascope.wcps2.util.CrsComputer;
 
@@ -105,43 +105,53 @@ public class CrsSubsetComputer implements IProcessor {
             axisIterator.setAxisName(axesNames.get(axisIteratorCounter));
         }
         //END HACK
-        processTrimInterval(axisIterator.getTrimInterval(), coverage, coverageRegistry);
+        processSubsetDimension(axisIterator.getTrimInterval(), coverage, coverageRegistry);
         //set the axis name back
         axisIterator.setAxisName(oldAxisName);
     }
 
     /**
-     * Processes a trim interval calculating the pixel bounds.
+     * Processes a subset interval calculating the pixel bounds.
      *
-     * @param trimInterval
+     * @param subsetDimension
      * @param coverage
      * @param coverageRegistry
      */
-    private void processTrimInterval(TrimDimensionInterval trimInterval, Coverage coverage, CoverageRegistry coverageRegistry){
+    private void processSubsetDimension(SubsetDimension subsetDimension, Coverage coverage, CoverageRegistry coverageRegistry) {
         //check that the interval is numeric, otherwise leave it as it (for example a[ i($x:$y)] should be left as is)
-        if(trimInterval.getRawTrimInterval().isCrsComputable()) {
-            String crs = trimInterval.getCrs();
+        // NOTE: it will try to check isTrimming first, if it is not then check isSlicing
+        // or it will returns NULL in case *slicing* due to getRawSubset();
+        if (subsetDimension.getRawSubset().isCrsComputable()) {
+            String crs = subsetDimension.getCrs();
             if (crs == null) {
                 crs = coverage.getCoverageInfo().getCoverageCrs();
             }
-            CrsComputer crsComputer = new CrsComputer(trimInterval.getAxisName(), crs, trimInterval.getRawTrimInterval(), coverage, coverageRegistry);
-            Interval<Long> pixelIndices = crsComputer.getPixelIndices();
-            trimInterval.setTrimInterval(pixelIndices);
+            CrsComputer crsComputer = null;
+            if (subsetDimension.getRawSubset().isTrimming()) {
+                crsComputer = new CrsComputer(subsetDimension.getAxisName(), crs, subsetDimension.getRawSubset(), coverage, coverageRegistry);
+                Subset<Long> pixelIndices = crsComputer.getPixelIndices();
+                subsetDimension.setSubset(pixelIndices);
+            } else {
+                crsComputer = new CrsComputer(subsetDimension.getAxisName(), crs, subsetDimension.getRawSubset().getSlicingCoordinate(), coverage, coverageRegistry);
+                Subset<Long> pixelIndices = crsComputer.getPixelIndices();
+                // NOTE: Get only lower bound value from pixelIndices in case of slicing
+                subsetDimension.setSubset(new Subset<Long>(pixelIndices.getLowerLimit()));
+            }
         }
     }
 
     /**
      * Processes a trim expression calculating the pixel bounds
      *
-     * @param currentNode      the current node where the trim was detected
+     * @param currentNode the current node where the trim was detected
      * @param coverageRegistry the coverage registry
      */
     private void processTrimExpression(IParseTreeNode currentNode, CoverageRegistry coverageRegistry) {
         TrimExpression trim = (TrimExpression) currentNode;
         Coverage coverage = trim.getCoverageExpression().getCoverage();
-        for (TrimDimensionInterval trimInterval : trim.getDimensionIntervalList().getIntervals()) {
-            processTrimInterval(trimInterval, coverage, coverageRegistry);
-        }
+        for (SubsetDimension subsetDimension : trim.getDimensionIntervalList().getIntervals()) {
+            processSubsetDimension(subsetDimension, coverage, coverageRegistry);
+         }
     }
 
 
@@ -154,9 +164,12 @@ public class CrsSubsetComputer implements IProcessor {
     private void processScaleExpression(IParseTreeNode currentNode, CoverageRegistry coverageRegistry) {
         ScaleExpression scale = (ScaleExpression) currentNode;
         Coverage coverage = scale.getCoverage();
-        for (TrimDimensionInterval trimInterval : scale.getDimensionIntervals().getIntervals()) {
-            processTrimInterval(trimInterval, coverage, coverageRegistry);
-        }
+        for (SubsetDimension subsetDimension : scale.getDimensionIntervals().getIntervals()) {
+            // NOTE: with this type of subset, it will not check the boundary of subset should be inside coverage
+            // e.g scale(c, {i(0:500), j(0:500)}
+            subsetDimension.getRawSubset().setSubsetScaleExtend(true);
+            processSubsetDimension(subsetDimension, coverage, coverageRegistry);
+         }
     }
 
     /**
@@ -167,8 +180,11 @@ public class CrsSubsetComputer implements IProcessor {
     private void processExtendExpression(IParseTreeNode currentNode, CoverageRegistry coverageRegistry) {
         ExtendExpression extend = (ExtendExpression) currentNode;
         Coverage coverage = extend.getCoverage();
-        for (TrimDimensionInterval trimInterval : extend.getDimensionIntervalList().getIntervals()) {
-            processTrimInterval(trimInterval, coverage, coverageRegistry);
-        }
+        for (SubsetDimension subsetDimension : extend.getDimensionIntervalList().getIntervals()) {
+            // NOTE: with this type of subset, it will not check the boundary of subset should be inside coverage
+            // e.g extend(c, {i(0:500), j(0:500)}
+            subsetDimension.getRawSubset().setSubsetScaleExtend(true);
+            processSubsetDimension(subsetDimension, coverage, coverageRegistry);
+         }
     }
 }

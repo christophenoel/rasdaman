@@ -6,7 +6,7 @@
         <ows:ExceptionText>Runtime error while processing request</ows:ExceptionText>
     </ows:Exception>
     <ows:Exception exceptionCode="RuntimeError">
-        <ows:ExceptionText>petascope.wcps2.error.managed.processing.UnorderedSubsetException : Invalid subsetting coordinates: (226 is greater than 138) for axis Long.</ows:ExceptionText>
+        <ows:ExceptionText>petascope.wcps2.error.managed.processing.InvalidSlicingException : Invalid slicing coordinate: (*) for axis j.</ows:ExceptionText>
     </ows:Exception>
 
 </ows:ExceptionReport>

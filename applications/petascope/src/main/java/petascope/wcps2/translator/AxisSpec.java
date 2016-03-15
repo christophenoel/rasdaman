@@ -40,14 +40,13 @@ public class AxisSpec extends IParseTreeNode {
     /**
      * Constructor for the class
      *
-     * @param axisName the name of the variable used to iterate
-     * @param interval the interval in which the iteration is done
+     * @param subsetDimension the interval in which the iteration is done
      */
-    public AxisSpec(TrimDimensionInterval interval) {
-        this.axisName = interval.getAxisName();
-        this.trimInterval = interval;
-        this.interval = new IntervalExpression(interval.getRawTrimInterval().getLowerLimit(),
-                interval.getRawTrimInterval().getUpperLimit());
+   public AxisSpec(SubsetDimension subsetDimension) {
+        this.axisName = subsetDimension.getAxisName();
+        this.subsetDimension = subsetDimension;
+        this.interval = new IntervalExpression(subsetDimension.getRawSubset().getLowerLimit(),
+                subsetDimension.getRawSubset().getUpperLimit());
         addChild(interval);
     }
 
@@ -77,18 +76,18 @@ public class AxisSpec extends IParseTreeNode {
     }
 
 
-    public TrimDimensionInterval getTrimInterval() {
-        return trimInterval;
-    }
+    public SubsetDimension getTrimInterval() {
+        return subsetDimension;
+     }
 
     public void setAxisName(String axisName) {
         this.axisName = axisName;
-        this.trimInterval.setAxisName(axisName);
+        this.subsetDimension.setAxisName(axisName);
     }
 
     protected String axisName;
     protected IntervalExpression interval;
-    protected TrimDimensionInterval trimInterval;
+    protected SubsetDimension subsetDimension;
 
     private final String TEMPLATE = "$variable in $interval";
 

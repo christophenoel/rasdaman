@@ -27,10 +27,13 @@ import org.apache.commons.lang3.StringUtils;
 import petascope.wcps2.error.managed.processing.InvalidAxisNameException;
 import petascope.wcps2.error.managed.processing.InvalidSubsettingException;
 import petascope.wcps2.metadata.CoverageRegistry;
-import petascope.wcps2.metadata.Interval;
+import petascope.wcps2.metadata.Subset;
 import petascope.wcps2.translator.*;
+import static petascope.wcs2.parsers.subsets.DimensionSlice.ASTERISK;
 
 import java.util.*;
+import org.slf4j.LoggerFactory;
+import petascope.wcps2.error.managed.processing.InvalidSlicingException;
 
 /**
  * Class that implements the parsing rules described in wcps.g4
@@ -40,6 +43,8 @@ import java.util.*;
  */
 public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(wcpsEvaluator.class);
+    
     public wcpsEvaluator(CoverageRegistry coverageRegistry) {
         super();
         this.coverageRegistry = coverageRegistry;
@@ -144,14 +149,14 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitAxisSpecLabel(@NotNull wcpsParser.AxisSpecLabelContext ctx) {
-        TrimDimensionInterval trimInterval = (TrimDimensionInterval) visit(ctx.dimensionIntervalElement());
-        return new AxisSpec(trimInterval);
+        SubsetDimension subsetDimension = (SubsetDimension) visit(ctx.dimensionIntervalElement());
+        return new AxisSpec(subsetDimension);
     }
 
     @Override
     public IParseTreeNode visitAxisIteratorLabel(@NotNull wcpsParser.AxisIteratorLabelContext ctx) {
-        TrimDimensionInterval trimInterval = (TrimDimensionInterval) visit(ctx.dimensionIntervalElement());
-        return new AxisIterator((CoverageExpressionVariableName) visit(ctx.coverageVariableName()), trimInterval);
+        SubsetDimension subsetDimension = (SubsetDimension) visit(ctx.dimensionIntervalElement());
+        return new AxisIterator((CoverageExpressionVariableName) visit(ctx.coverageVariableName()), subsetDimension);
     }
 
     @Override
@@ -288,17 +293,17 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
             if (ctx.axisName() == null) {
                 throw new InvalidAxisNameException("No axis given");
             }
-            return new TrimDimensionInterval(ctx.axisName().getText(), crs, rawLowerBound, rawUpperBound);
+            return new SubsetDimension(ctx.axisName().getText(), crs, rawLowerBound, rawUpperBound);
         } catch (NumberFormatException e) {
-            throw new InvalidSubsettingException(ctx.axisName().getText(), new Interval<String>(ctx.coverageExpression(0).getText(), ctx.coverageExpression(1).getText()));
+            throw new InvalidSubsettingException(ctx.axisName().getText(), new Subset<String>(ctx.coverageExpression(0).getText(), ctx.coverageExpression(1).getText()));
         }
     }
 
     @Override
     public IParseTreeNode visitDimensionIntervalListLabel(@NotNull wcpsParser.DimensionIntervalListLabelContext ctx) {
-        List<TrimDimensionInterval> intervalList = new ArrayList<TrimDimensionInterval>(ctx.dimensionIntervalElement().size());
+        List<SubsetDimension> intervalList = new ArrayList<SubsetDimension>(ctx.dimensionIntervalElement().size());
         for (wcpsParser.DimensionIntervalElementContext elem : ctx.dimensionIntervalElement()) {
-            intervalList.add((TrimDimensionInterval) visit(elem));
+            intervalList.add((SubsetDimension) visit(elem));
         }
         return new DimensionIntervalList(intervalList);
     }
@@ -351,23 +356,30 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
             crs = ctx.crsName().getText().replace("\"", "");
         }
         CoverageExpression bound = (CoverageExpression) visit(ctx.coverageExpression());
-        return new TrimDimensionInterval(ctx.axisName().getText(), crs, bound, bound);
+        return new SubsetDimension(ctx.axisName().getText(), crs, bound, bound);
     }
 
     @Override
     public IParseTreeNode visitDimensionPointListLabel(@NotNull wcpsParser.DimensionPointListLabelContext ctx) {
-        List<TrimDimensionInterval> intervalList = new ArrayList<TrimDimensionInterval>(ctx.dimensionPointElement().size());
+        List<SubsetDimension> intervalList = new ArrayList<SubsetDimension>(ctx.dimensionPointElement().size());
         for (wcpsParser.DimensionPointElementContext elem : ctx.dimensionPointElement()) {
-            intervalList.add((TrimDimensionInterval) visit(elem));
+            intervalList.add((SubsetDimension) visit(elem));
         }
         return new DimensionIntervalList(intervalList);
     }
 
     @Override
-    public IParseTreeNode visitSliceDimensionIntervalElementLabel(@NotNull wcpsParser.SliceDimensionIntervalElementLabelContext ctx) {
+    public IParseTreeNode visitSliceDimensionIntervalElementLabel(@NotNull wcpsParser.SliceDimensionIntervalElementLabelContext ctx){
         CoverageExpression bound = (CoverageExpression) visit(ctx.coverageExpression());
         String crs = ctx.crsName() == null ? "" : ctx.crsName().getText().replace("\"", "");
-        return new TrimDimensionInterval(ctx.axisName().getText(), crs, bound, bound);
+        SubsetDimension subsetDimension = null;
+        try {
+            subsetDimension = new SubsetDimension(ctx.axisName().getText(), crs, bound);
+        } catch (InvalidSlicingException ex) {
+            log.error(ex.getMessage());
+            throw ex;
+        }
+        return subsetDimension;
     }
 
     @Override
@@ -382,7 +394,7 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitStarExpressionLabel(@NotNull wcpsParser.StarExpressionLabelContext ctx) {
-        return new StringScalar("\"*\"");
+        return new StringScalar("\""+ ASTERISK + "\"");
     }
 
     @Override

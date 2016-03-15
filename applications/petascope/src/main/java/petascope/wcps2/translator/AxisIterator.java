@@ -43,19 +43,19 @@ public class AxisIterator extends AxisSpec {
      *
      * @param variableName the name of the variable used to iterate
      * @param axisName     the name of the axis on which to iterate
-     * @param interval     the interval on which to iterate
+     * @param subsetDimension     the interval on which to iterate
      */
-    public AxisIterator(CoverageExpressionVariableName variableName, TrimDimensionInterval trimInterval) {
-        super(trimInterval);
-        this.interval = new IntervalExpression(trimInterval.getRawTrimInterval().getLowerLimit(),
-                trimInterval.getRawTrimInterval().getUpperLimit());
+    public AxisIterator(CoverageExpressionVariableName variableName, SubsetDimension subsetDimension) {
+        super(subsetDimension);
+        this.interval = new IntervalExpression(subsetDimension.getRawSubset().getLowerLimit(),
+                subsetDimension.getRawSubset().getUpperLimit());
         this.variableName = variableName;
         addChild(interval);
     }
 
     @Override
     public String toRasql() throws WCPSProcessingError {
-        String template = TEMPLATE.replace("$variableName", this.variableName.toRasql()).replace("$interval", this.trimInterval.toRasql());
+        String template = TEMPLATE.replace("$variableName", this.variableName.toRasql()).replace("$interval", this.subsetDimension.toRasql());
         return template;
     }
 

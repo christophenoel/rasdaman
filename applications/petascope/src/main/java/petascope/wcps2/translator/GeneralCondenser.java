@@ -72,15 +72,15 @@ public class GeneralCondenser extends IParseTreeNode {
 
     @Override
     public String toRasql() {
-        List<TrimDimensionInterval> trimIntervals = new ArrayList<TrimDimensionInterval>(axisIterators.size());
+        List<SubsetDimension> subsetDimensions = new ArrayList<SubsetDimension>(axisIterators.size());
         String usedVariable = "";
         for (AxisIterator i : axisIterators) {
             if(usedVariable.isEmpty()){
                 usedVariable = i.getVariableName().toRasql();
             }
-            trimIntervals.add(i.getTrimInterval());
+            subsetDimensions.add(i.getTrimInterval());
         }
-        dimensionIntervalList = new DimensionIntervalList(trimIntervals);
+        dimensionIntervalList = new DimensionIntervalList(subsetDimensions);
         String template = TEMPLATE.replace("$iter", usedVariable).replace("$intervals", dimensionIntervalList.toRasql()).
                 replace("$values", values.toRasql()).replace("$operation", this.operation);
         if (this.whereClause != null) {

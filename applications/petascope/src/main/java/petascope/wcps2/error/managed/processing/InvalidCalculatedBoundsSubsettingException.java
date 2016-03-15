@@ -21,7 +21,7 @@
  */
 package petascope.wcps2.error.managed.processing;
 
-import petascope.wcps2.metadata.Interval;
+import petascope.wcps2.metadata.Subset;
 
 /**
  * Error to be thrown if bounds that are calculated are not correct.
@@ -29,7 +29,7 @@ import petascope.wcps2.metadata.Interval;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class InvalidCalculatedBoundsException extends InvalidSubsettingException {
+public class InvalidCalculatedBoundsSubsettingException extends InvalidSubsettingException {
 
     /**
      * Constructor for the class
@@ -37,9 +37,9 @@ public class InvalidCalculatedBoundsException extends InvalidSubsettingException
      * @param axisName the axis on which the subset is being made
      * @param subset   the offending subset
      */
-    public InvalidCalculatedBoundsException(String axisName, Interval<String> subset) {
-        super(axisName, subset);
+    public InvalidCalculatedBoundsSubsettingException(String axisName, Subset<String> subset) {
+        super(axisName, subset, ERROR_TEMPLATE);
     }
 
-    public static String TEMPLATE = "The bounds were not correctly calculated$message";
+    public static String ERROR_TEMPLATE = "The bound(s) were not correctly calculated: $subsetDomainType coordinate(s) ($subsetBound) for axis $axis.";
 }

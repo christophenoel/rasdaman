@@ -63,14 +63,14 @@ public class CoverageConstructor extends CoverageBuilder {
     @Override
     public String toRasql() {
         String usedVariable = "";
-        List<TrimDimensionInterval> trimIntervals = new ArrayList<TrimDimensionInterval>(axisIterators.size());
+        List<SubsetDimension> subsetDimensions = new ArrayList<SubsetDimension>(axisIterators.size());
         for (AxisIterator i : axisIterators) {
             if(usedVariable.isEmpty()){
                 usedVariable = i.getVariableName().toRasql();
             }
-            trimIntervals.add(i.getTrimInterval());
+            subsetDimensions.add(i.getTrimInterval());
         }
-        DimensionIntervalList dimensionIntervalList = new DimensionIntervalList(trimIntervals);
+        DimensionIntervalList dimensionIntervalList = new DimensionIntervalList(subsetDimensions);
         String template = TEMPLATE.replace("$iter", usedVariable).
                 replace("$intervals", dimensionIntervalList.toRasql()).replace("$values", values.toRasql());
         return template;

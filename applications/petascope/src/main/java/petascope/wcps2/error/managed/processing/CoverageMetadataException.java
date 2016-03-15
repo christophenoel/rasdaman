@@ -34,20 +34,19 @@ public class CoverageMetadataException extends WCPSProcessingError {
      * @param originalCause the exception that caused the error
      */
     public CoverageMetadataException(Exception originalCause) {
-        super(TEMPLATE.replace("$metadataError", originalCause.getMessage()));
-        this.originalCause = originalCause;
-
+        super(ERROR_TEMPLATE.replace("$metadataError", originalCause.getMessage()));
     }
 
     /**
-     * Getter for the original cause error
+     * Constructor for the class when subclass send the appropriate exception
+    * message
      *
-     * @return
+     * @param originalCause the exception that caused the error
++    * @param errorMessage the error message from subclass
      */
-    public Exception getOriginalCause() {
-        return originalCause;
-    }
+    public CoverageMetadataException(Exception originalCause, String errorMessage) {
+        super(errorMessage);
+     }
 
-    private final Exception originalCause;
-    private static final String TEMPLATE = "Error in processing coverage metadata: $metadataError";
+    private static final String ERROR_TEMPLATE = "Error in processing coverage metadata: $metadataError.";
 }

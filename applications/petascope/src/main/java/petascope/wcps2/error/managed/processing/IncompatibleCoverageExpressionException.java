@@ -38,28 +38,8 @@ public class IncompatibleCoverageExpressionException extends WCPSProcessingError
      * @param secondCov the second incompatible coverage
      */
     public IncompatibleCoverageExpressionException(Coverage firstCov, Coverage secondCov) {
-        this.firstCov = firstCov;
-        this.secondCov = secondCov;
+        super(ERROR_TEMPLATE.replace("$firstCov", firstCov.getCoverageName()).replace("$secondCov", secondCov.getCoverageName()));
     }
 
-    /**
-     * Returns the first offending coverage
-     *
-     * @return
-     */
-    public Coverage getFirstCov() {
-        return firstCov;
-    }
-
-    /**
-     * Returns the second offending coverage
-     *
-     * @return
-     */
-    public Coverage getSecondCov() {
-        return secondCov;
-    }
-
-    private final Coverage firstCov;
-    private final Coverage secondCov;
+    public static final String ERROR_TEMPLATE = "Incompatible operation between coverages $firstCov and $secondCov.";
 }

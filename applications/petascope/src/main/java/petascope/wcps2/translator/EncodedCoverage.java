@@ -54,7 +54,13 @@ public class EncodedCoverage extends IParseTreeNode {
     public EncodedCoverage(IParseTreeNode coverageExpression, String format, List<String> otherParams) {
         this.format = format;
         this.coverageExpression = coverageExpression;
-        this.otherParams = otherParams;
+        // ticket1241 returns error when otherParams is NULL, then need to initialize if the params are empty
+        if(otherParams != null) {
+            this.otherParams = otherParams;
+        }
+        else {
+            this.otherParams = new ArrayList<String>(5);
+        }
         addChild(coverageExpression);
     }
 
