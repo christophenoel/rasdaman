@@ -30,6 +30,7 @@ import petascope.wcps2.util.CrsComputer;
 
 import java.util.ArrayList;
 import java.util.List;
+import petascope.util.CrsUtil;
 
 /**
  * Calculates the pixel array bounds based on the subset given taking the crs of the coverage expression into account
@@ -105,6 +106,10 @@ public class CrsSubsetComputer implements IProcessor {
             axisIterator.setAxisName(axesNames.get(axisIteratorCounter));
         }
         //END HACK
+        
+        // NOTE: axis iterator should only be considered as GridAxis (i.e: CRS:1)
+        // or it will try to calculate it same as geo-referenced axis (e.g: $t [0:20] will be $t [0:19] (t1206)
+        coverage.getCoverageInfo().setCoverageCrs(CrsUtil.GRID_CRS);
         processSubsetDimension(axisIterator.getTrimInterval(), coverage, coverageRegistry);
         //set the axis name back
         axisIterator.setAxisName(oldAxisName);
