@@ -40,6 +40,8 @@ public class ExtendExpression extends CoverageExpression {
         this.coverage = coverage;
         this.dimensionIntervalList = dimensionIntervalList;
         setCoverage(coverage.getCoverage());
+        addChild(coverage);
+        addChild(dimensionIntervalList);
     }
 
     @Override

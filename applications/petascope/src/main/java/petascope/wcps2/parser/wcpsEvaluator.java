@@ -182,15 +182,20 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
     public IParseTreeNode visitExponentialExpressionLabel(@NotNull wcpsParser.ExponentialExpressionLabelContext ctx) {
         return new UnaryArithmeticExpression(ctx.exponentialExpressionOperator().getText(), visit(ctx.coverageExpression()));
     }
+    
+    @Override
+    public IParseTreeNode visitUnaryPowerExpressionLabel(@NotNull wcpsParser.UnaryPowerExpressionLabelContext ctx) {
+        return new UnaryPowerExpression((CoverageExpression)visit(ctx.coverageExpression()), (CoverageExpression)visit(ctx.numericalScalarExpression()));
+    }
 
     @Override
     public IParseTreeNode visitNotUnaryBooleanExpressionLabel(@NotNull wcpsParser.NotUnaryBooleanExpressionLabelContext ctx) {
-        return new UnaryBooleanExpression(visit(ctx.coverageExpression()));
+        return new UnaryBooleanExpression((CoverageExpression)visit(ctx.coverageExpression()));
     }
 
     @Override
     public IParseTreeNode visitBitUnaryBooleanExpressionLabel(@NotNull wcpsParser.BitUnaryBooleanExpressionLabelContext ctx) {
-        return new UnaryBooleanExpression(visit(ctx.coverageExpression()), visit(ctx.numericalScalarExpression()));
+        return new UnaryBooleanExpression((CoverageExpression)visit(ctx.coverageExpression()), (CoverageExpression)visit(ctx.numericalScalarExpression()));
     }
 
     @Override

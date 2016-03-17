@@ -226,6 +226,8 @@ coverageExpression: coverageExpression booleanOperator coverageExpression       
                   | unaryArithmeticExpression                                                                           #CoverageExpressionUnaryArithmeticLabel
                   | trigonometricExpression                                                                             #CoverageExpressionTrigonometricLabel
                   | exponentialExpression                                                                               #CoverageExpressionExponentialLabel
+		  | unaryPowerExpression		
+#CoverageExpressionPowerLabel
                   | unaryBooleanExpression                                                                              #CoverageExpressionUnaryBooleanLabel
                   | castExpression                                                                                      #CoverageExpressionCastLabel
                   | coverageExpression DOT fieldName                                                                    #CoverageExpressionRangeSubsettingLabel
@@ -306,6 +308,17 @@ exponentialExpressionOperator: EXP | LOG | LN;
  *   for $c in cov return encode(ln(exp($c)), "csv")
  */
 exponentialExpression: exponentialExpressionOperator LEFT_PARANTHESIS coverageExpression RIGHT_PARANTHESIS              #ExponentialExpressionLabel;
+
+/**		
+ *		
+ * Example  		
+ *   pow($coverage, 3)		
+ * Query:		
+ *   for c in (mr) return encode( pow( c[i(100:110),j(100:110)], -0.5 ), "csv" )		
+*/		
+unaryPowerExpression: POWER LEFT_PARANTHESIS coverageExpression COMMA numericalScalarExpression RIGHT_PARANTHESIS 		
+#UnaryPowerExpressionLabel;
+
 
 /**
  * Example

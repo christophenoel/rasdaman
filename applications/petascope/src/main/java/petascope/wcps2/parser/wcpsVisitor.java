@@ -411,6 +411,13 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	T visitForClauseLabel(@NotNull wcpsParser.ForClauseLabelContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link wcpsParser#UnaryPowerExpressionLabel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryPowerExpressionLabel(@NotNull wcpsParser.UnaryPowerExpressionLabelContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link wcpsParser#CoverageExpressionUnaryBooleanLabel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -661,6 +668,13 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCondenseExpression(@NotNull wcpsParser.CondenseExpressionContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link wcpsParser#CoverageExpressionPowerLabel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCoverageExpressionPowerLabel(@NotNull wcpsParser.CoverageExpressionPowerLabelContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link wcpsParser#DimensionIntervalListLabel}.

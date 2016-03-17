@@ -23,7 +23,9 @@ package petascope.wcps2.translator;
 
 /**
  * Class to translate a scale wcps expression into rasql
- *
+ * <code>
+ *    SCALE($coverageExpression, [$dimensionIntervalList])
+ * </code>
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */

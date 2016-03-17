@@ -758,6 +758,19 @@ public class wcpsBaseListener implements wcpsListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterUnaryPowerExpressionLabel(@NotNull wcpsParser.UnaryPowerExpressionLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitUnaryPowerExpressionLabel(@NotNull wcpsParser.UnaryPowerExpressionLabelContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterCoverageExpressionUnaryBooleanLabel(@NotNull wcpsParser.CoverageExpressionUnaryBooleanLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1220,6 +1233,19 @@ public class wcpsBaseListener implements wcpsListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitCondenseExpression(@NotNull wcpsParser.CondenseExpressionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterCoverageExpressionPowerLabel(@NotNull wcpsParser.CoverageExpressionPowerLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitCoverageExpressionPowerLabel(@NotNull wcpsParser.CoverageExpressionPowerLabelContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

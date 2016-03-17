@@ -636,6 +636,17 @@ public interface wcpsListener extends ParseTreeListener {
 	void exitForClauseLabel(@NotNull wcpsParser.ForClauseLabelContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link wcpsParser#UnaryPowerExpressionLabel}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryPowerExpressionLabel(@NotNull wcpsParser.UnaryPowerExpressionLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link wcpsParser#UnaryPowerExpressionLabel}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryPowerExpressionLabel(@NotNull wcpsParser.UnaryPowerExpressionLabelContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link wcpsParser#CoverageExpressionUnaryBooleanLabel}.
 	 * @param ctx the parse tree
 	 */
@@ -1030,6 +1041,17 @@ public interface wcpsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCondenseExpression(@NotNull wcpsParser.CondenseExpressionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link wcpsParser#CoverageExpressionPowerLabel}.
+	 * @param ctx the parse tree
+	 */
+	void enterCoverageExpressionPowerLabel(@NotNull wcpsParser.CoverageExpressionPowerLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link wcpsParser#CoverageExpressionPowerLabel}.
+	 * @param ctx the parse tree
+	 */
+	void exitCoverageExpressionPowerLabel(@NotNull wcpsParser.CoverageExpressionPowerLabelContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link wcpsParser#DimensionIntervalListLabel}.
