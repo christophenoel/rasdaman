@@ -39,7 +39,7 @@ import java.util.Map;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class ReduceExpression extends IParseTreeNode {
+public class ReduceExpression extends CoverageExpression {
 
 
     public ReduceExpression(String reduceOperation, IParseTreeNode reduceParameter) {

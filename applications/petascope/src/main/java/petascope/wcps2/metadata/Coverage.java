@@ -78,11 +78,11 @@ public class Coverage {
     /**
      * Determines if the coverage is compatible with a new given coverage
      *
-     * @param coverage the coverage to be compared with
+     * @param coverage the coverage to be compared with coverage that sit in database
      * @return true if compatible, false otherwise
      */
     public boolean isCompatibleWith(@NotNull Coverage coverage) {
-        if (this == DEFAULT_COVERAGE || coverage == DEFAULT_COVERAGE) {
+        if (this.equals(DEFAULT_COVERAGE) || coverage.equals(DEFAULT_COVERAGE)) {
             return true;
         }
         return coverageInfo.isCompatible(coverage.getCoverageInfo());
@@ -92,5 +92,6 @@ public class Coverage {
     private String coverageCrs;
     private CoverageInfo coverageInfo;
     private CoverageMetadata coverageMetadata;
-    public static Coverage DEFAULT_COVERAGE = new Coverage("$$DEFAULT_COVERAGE$$");
+    public static String DEFAULT_COVERAGE_NAME = "$$DEFAULT_COVERAGE$$";
+    public static Coverage DEFAULT_COVERAGE = new Coverage(DEFAULT_COVERAGE_NAME);    
 }

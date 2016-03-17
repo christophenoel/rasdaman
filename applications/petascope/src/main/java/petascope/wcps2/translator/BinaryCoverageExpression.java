@@ -46,8 +46,8 @@ public class BinaryCoverageExpression extends CoverageExpression {
     /**
      * Constructor for the class
      *
-     * @param firstCoverageExpr  the first coverage expression
-     * @param operator           the operator of the expression
+     * @param firstCoverageExpr the first coverage expression
+     * @param operator the operator of the expression
      * @param secondCoverageExpr the second coverage expression
      */
     public BinaryCoverageExpression(IParseTreeNode firstCoverageExpr, String operator, IParseTreeNode secondCoverageExpr) {
@@ -66,11 +66,15 @@ public class BinaryCoverageExpression extends CoverageExpression {
     }
 
     /**
-     * Checks the consistency of the operation by verifying if the coverages are compatible
+     * Checks the consistency of the operation by verifying if the coverages are
+     * compatible
      */
     private void checkConsistency() {
-        if (!firstCoverageExpr.getCoverage().isCompatibleWith(secondCoverageExpr.getCoverage())) {
-            throw new IncompatibleCoverageExpressionException(firstCoverageExpr.getCoverage(), secondCoverageExpr.getCoverage());
+        // This will avoid NULL error when trying to check compatible from reduced expression, operand,...
+        if (isCoverageExpressionNotNull(firstCoverageExpr) && isCoverageExpressionNotNull(secondCoverageExpr)) {
+            if (!firstCoverageExpr.getCoverage().isCompatibleWith(secondCoverageExpr.getCoverage())) {
+                throw new IncompatibleCoverageExpressionException(firstCoverageExpr.getCoverage(), secondCoverageExpr.getCoverage());
+            }
         }
     }
 
@@ -81,23 +85,44 @@ public class BinaryCoverageExpression extends CoverageExpression {
         CoverageInfo covInfo = null;
         CoverageMetadata covMeta = null;
         //some times one or both of the coverages are actually scalars, i.e. 5 + mr is a coverage, but 5 is not
-        if(firstCoverageExpr.getCoverage().getCoverageInfo() != null) {
+        // NOTE: with coverageExpression like 3 + 5 then it can return CoverageInfor but all properties are NULL (t1221)
+        if (isCoverageExpressionNotNull(firstCoverageExpr)) {
             //first is a coverage
             covInfo = new CoverageInfo(firstCoverageExpr.getCoverage().getCoverageInfo());
             covMeta = firstCoverageExpr.getCoverage().getCoverageMetadata();
-        }
-        else if(secondCoverageExpr.getCoverage().getCoverageInfo() != null){
+        } else if (isCoverageExpressionNotNull(secondCoverageExpr)) {
             //first is not a coverage, second is
             covInfo = new CoverageInfo(secondCoverageExpr.getCoverage().getCoverageInfo());
             covMeta = secondCoverageExpr.getCoverage().getCoverageMetadata();
-        }
-        else{
+        } else {
             //none is a coverage, empty objects
             covMeta = new CoverageMetadata();
             covInfo = new CoverageInfo();
         }
-        String coverageName = firstCoverageExpr.getCoverage().getCoverageName() + operator + secondCoverageExpr.getCoverage().getCoverageName();
+        String coverageName;
+        String firstCoverageExprName;
+        String secondCoverageExprName;
+
+        firstCoverageExprName = (firstCoverageExpr.getCoverage() != null) ? firstCoverageExpr.getCoverage().getCoverageName() : Coverage.DEFAULT_COVERAGE_NAME;
+        secondCoverageExprName = (secondCoverageExpr.getCoverage() != null) ? secondCoverageExpr.getCoverage().getCoverageName() : Coverage.DEFAULT_COVERAGE_NAME;
+
+        coverageName = firstCoverageExprName + operator + secondCoverageExprName;
         setCoverage(new Coverage(coverageName, covInfo, covMeta));
+    }
+
+    /**
+     * This function is used to check that coverage expression is not null (has its existing metadata)
+     * @return boolean
+     */
+    private boolean isCoverageExpressionNotNull(CoverageExpression coverageExpression)
+    {
+        // if one of 3 objects is NULL then it is not coverage expression which has stored coverage metadata
+        if(coverageExpression.getCoverage() == null ||
+           coverageExpression.getCoverage().getCoverageInfo() == null ||
+           coverageExpression.getCoverage().getCoverageInfo().getCellDomains() == null) {
+            return false;
+        }
+        return true;
     }
 
     private CoverageExpression firstCoverageExpr;
