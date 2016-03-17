@@ -481,6 +481,13 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	T visitComplexNumberConstantLabel(@NotNull wcpsParser.ComplexNumberConstantLabelContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link wcpsParser#NumericalRealPositiveNumberExpressionLabel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumericalRealPositiveNumberExpressionLabel(@NotNull wcpsParser.NumericalRealPositiveNumberExpressionLabelContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link wcpsParser#BooleanUnaryScalarLabel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -586,18 +593,18 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	T visitDimensionPointListLabel(@NotNull wcpsParser.DimensionPointListLabelContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link wcpsParser#CoverageIdExpressionLabel}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link wcpsParser#reduceNumericalExpressionOperator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitReduceNumericalExpressionOperator(@NotNull wcpsParser.ReduceNumericalExpressionOperatorContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link wcpsParser#CoverageIdExpressionLabel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link wcpsParser#BooleanBinaryScalarLabel}.

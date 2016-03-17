@@ -145,6 +145,8 @@ numericalScalarExpression: numericalUnaryOperation LEFT_PARANTHESIS numericalSca
                          | trigonometricOperator LEFT_PARANTHESIS numericalScalarExpression RIGHT_PARANTHESIS           #NumericalTrigonometricScalarExpressionLabel
                          | numericalScalarExpression numericalOperator numericalScalarExpression                        #NumericalBinaryScalarExpressionLabel
                          | condenseExpression                                                                           #NumericalCondenseExpressionLabel
+			 | numericalOperator REAL_NUMBER_CONSTANT
+#NumericalRealPositiveNumberExpressionLabel
                          | REAL_NUMBER_CONSTANT                                                                         #NumericalRealNumberExpressionLabel
                          | complexNumberConstant                                                                        #NumericalComplexNumberConstant
                          ;

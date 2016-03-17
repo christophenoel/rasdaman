@@ -212,6 +212,11 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
     public IParseTreeNode visitNumericalRealNumberExpressionLabel(@NotNull wcpsParser.NumericalRealNumberExpressionLabelContext ctx) {
         return new RealNumberConstant(ctx.getText());
     }
+           
+    @Override
+    public IParseTreeNode visitNumericalRealPositiveNumberExpressionLabel (@NotNull wcpsParser.NumericalRealPositiveNumberExpressionLabelContext ctx) {
+       return new RealNumberConstant(ctx.getText());
+    }
 
     @Override
     public IParseTreeNode visitCoverageExpressionCoverageLabel(@NotNull wcpsParser.CoverageExpressionCoverageLabelContext ctx) {

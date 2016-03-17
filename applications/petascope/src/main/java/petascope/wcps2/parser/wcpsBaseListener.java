@@ -888,6 +888,19 @@ public class wcpsBaseListener implements wcpsListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterNumericalRealPositiveNumberExpressionLabel(@NotNull wcpsParser.NumericalRealPositiveNumberExpressionLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitNumericalRealPositiveNumberExpressionLabel(@NotNull wcpsParser.NumericalRealPositiveNumberExpressionLabelContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterBooleanUnaryScalarLabel(@NotNull wcpsParser.BooleanUnaryScalarLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1083,19 +1096,6 @@ public class wcpsBaseListener implements wcpsListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterReduceNumericalExpressionOperator(@NotNull wcpsParser.ReduceNumericalExpressionOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1103,6 +1103,19 @@ public class wcpsBaseListener implements wcpsListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitReduceNumericalExpressionOperator(@NotNull wcpsParser.ReduceNumericalExpressionOperatorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
