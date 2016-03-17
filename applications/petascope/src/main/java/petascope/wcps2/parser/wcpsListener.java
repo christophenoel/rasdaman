@@ -933,17 +933,6 @@ public interface wcpsListener extends ParseTreeListener {
 	void exitReduceNumericalExpressionOperator(@NotNull wcpsParser.ReduceNumericalExpressionOperatorContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link wcpsParser#CoverageIdExpressionLabel}.
-	 * @param ctx the parse tree
-	 */
-	void enterCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link wcpsParser#CoverageIdExpressionLabel}.
-	 * @param ctx the parse tree
-	 */
-	void exitCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link wcpsParser#BooleanBinaryScalarLabel}.
 	 * @param ctx the parse tree
 	 */
@@ -1151,6 +1140,17 @@ public interface wcpsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitWhereClauseLabel(@NotNull wcpsParser.WhereClauseLabelContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link wcpsParser#CoverageIdentifierExpressionLabel}.
+	 * @param ctx the parse tree
+	 */
+	void enterCoverageIdentifierExpressionLabel(@NotNull wcpsParser.CoverageIdentifierExpressionLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link wcpsParser#CoverageIdentifierExpressionLabel}.
+	 * @param ctx the parse tree
+	 */
+	void exitCoverageIdentifierExpressionLabel(@NotNull wcpsParser.CoverageIdentifierExpressionLabelContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link wcpsParser#CoverageExpressionRangeConstructorLabel}.

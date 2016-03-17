@@ -23,6 +23,7 @@ package petascope.wcps2.translator;
 
 import org.jetbrains.annotations.NotNull;
 import petascope.wcps2.metadata.Coverage;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Class to represent a node in the tree that is a coverage expression
@@ -30,7 +31,7 @@ import petascope.wcps2.metadata.Coverage;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public abstract class CoverageExpression extends IParseTreeNode {
+public abstract class CoverageExpression extends IRasqlParseTreeNode {
 
     /**
      * Returns the coverage resulting from this operation

@@ -21,6 +21,9 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation node from wcps axisSpec to rasql
  * Example:
@@ -35,7 +38,7 @@ package petascope.wcps2.translator;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class AxisSpec extends IParseTreeNode {
+public class AxisSpec extends IRasqlParseTreeNode {
 
     /**
      * Constructor for the class

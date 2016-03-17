@@ -21,6 +21,10 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IMetaParseTreeNode;
+import petascope.wcps2.parse.treenode.IParseTreeNode;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation node from wcps to rasql for the return clause.
  * Example:
@@ -42,13 +46,60 @@ public class ReturnClause extends IParseTreeNode {
         addChild(processingExpr);
     }
 
-    @Override
-    public String toRasql() {
-        String template = TEMPLATE.replace("$processingExpression", this.processingExpr.toRasql());
+    /**
+     * Result can be translated to *Rasql* or get Meta *Result* based on the type of *processingExpr*
+     * @return String
+     */
+    public String getRasqlOrResult()
+    {
+        String value;
+        // Default it should return *Rasql*
+        if(isReturnRasql()) {
+            value = toRasql();
+        }
+        // In some cases, it should return *Meta value*
+        else {
+            value = getResult();
+        }
+        return value;
+    }
+
+    /**
+     * Check if the WCPS query should return *Rasql* or get Meta *Result*, default return true
+     * NOTE: if need to check other cases to return 'Result' then add it in here
+     * @return boolean
+     */
+    public boolean isReturnRasql()
+    {
+        // identifier(c) = mr
+        if(this.processingExpr instanceof CoverageIdentifier) {
+            return false;
+        }
+        return true;
+    }
+
+    // This function will return *Rasql* in "return clause"
+    private String toRasql() {
+        String template = TEMPLATE_RASQL.replace("$processingExpression", ((IRasqlParseTreeNode)this.processingExpr).toRasql());
         return template;
     }
 
-    private IParseTreeNode processingExpr;
-    private final String TEMPLATE = "SELECT $processingExpression ";
+    // This function will return *Meta value*
+    private String getResult() {
+        String template = TEMPLATE_META_VALUE.replace("$returnValue", ((IMetaParseTreeNode)this.processingExpr).getResult());
+        return template;
+    }
 
+    /**
+     * Return the processing expression in ReturnClause
+     * @return IParseTreeNode
+     */
+    public IParseTreeNode getProcessingExpr()
+    {
+        return processingExpr;
+    }
+
+    private IParseTreeNode processingExpr;
+    private String TEMPLATE_RASQL = "SELECT $processingExpression ";
+    private String TEMPLATE_META_VALUE = "$returnValue";
 }

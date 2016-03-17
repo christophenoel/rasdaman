@@ -14,44 +14,35 @@
  * You should have received a copy of the GNU  General Public License
  * along with rasdaman community.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2003 - 2016 Peter Baumann / rasdaman GmbH.
+ * Copyright 2003 - 2014 Peter Baumann / rasdaman GmbH.
  *
  * For more information please see <http://www.rasdaman.org>
  * or contact Peter Baumann via <baumann@rasdaman.com>.
  */
-package petascope.wcps2.translator;
+package petascope.wcps2.result;
 
-import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+import petascope.wcps2.query.WcpsQuery;
 
 /**
- * Class to translate a boolean constant, e.g. true or false
- * <p/>
- * <code>
- * true
- * </code>
- * translates to
- * <code>
- * true
- * </code>
  *
- * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
- * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
+ * @author b.phamhuu@jacobs-university.de - Bang Pham Huu
  */
-public class BooleanConstant extends IRasqlParseTreeNode {
+// Subtypes for WCPSResult
+public class WCPSRasqlResult implements WCPSResult {
+
+    public String setRasqlQuery(WcpsQuery wcpsQuery) {
+        rasqlResult = wcpsQuery.toRasql();
+        return rasqlResult;
+    }
 
     /**
-     * Constructor for the class
+     * Return Rasql query
      *
-     * @param truthValue the boolean value in string format
+     * @return String
      */
-    public BooleanConstant(String truthValue) {
-        this.truthValue = truthValue;
+    public String getResult() {
+        return rasqlResult;
     }
 
-    @Override
-    public String toRasql() {
-        return truthValue;
-    }
-
-    public final String truthValue;
+    private String rasqlResult;
 }

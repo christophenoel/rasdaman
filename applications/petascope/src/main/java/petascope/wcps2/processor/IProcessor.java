@@ -22,8 +22,7 @@
 package petascope.wcps2.processor;
 
 import petascope.wcps2.metadata.CoverageRegistry;
-import petascope.wcps2.translator.IParseTreeNode;
-
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 /**
  * Interface for processing classes that have to operate on the tree before it is translated to rasql
  *

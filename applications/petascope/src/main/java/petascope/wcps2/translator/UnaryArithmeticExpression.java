@@ -21,6 +21,9 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation node from wcps unary arithmetic expression to rasql
  * Example:
@@ -37,7 +40,7 @@ package petascope.wcps2.translator;
  */
 public class UnaryArithmeticExpression extends CoverageExpression {
 
-    public UnaryArithmeticExpression(String operator, IParseTreeNode coverageExpr) {
+    public UnaryArithmeticExpression(String operator, IRasqlParseTreeNode coverageExpr) {
         this.operator = operator;
         this.coverageExpr = coverageExpr;
         addChild(coverageExpr);
@@ -58,7 +61,7 @@ public class UnaryArithmeticExpression extends CoverageExpression {
     }
 
     private String operator;
-    private IParseTreeNode coverageExpr;
+    private IRasqlParseTreeNode coverageExpr;
     private final String TEMPLATE = "$preOperator $coverage $postOperator";
     private final String POST_REAL = "re";
     private final String POST_IMAGINARY = "im";

@@ -22,6 +22,7 @@
 package petascope.wcps2.translator;
 
 import petascope.wcps2.metadata.Coverage;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translator class for coverage expressions that are surrounded by parenthesis.
@@ -31,7 +32,7 @@ import petascope.wcps2.metadata.Coverage;
  */
 public class ParenthesesCoverageExpression extends CoverageExpression {
 
-    public ParenthesesCoverageExpression(IParseTreeNode coverageExpression) {
+    public ParenthesesCoverageExpression(IRasqlParseTreeNode coverageExpression) {
         this.coverageExpression = coverageExpression;
         addChild(coverageExpression);
 
@@ -48,5 +49,5 @@ public class ParenthesesCoverageExpression extends CoverageExpression {
         return " ( " + coverageExpression.toRasql() + " ) ";
     }
 
-    private final IParseTreeNode coverageExpression;
+    private final IRasqlParseTreeNode coverageExpression;
 }

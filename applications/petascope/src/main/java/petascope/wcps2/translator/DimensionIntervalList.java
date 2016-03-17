@@ -21,11 +21,13 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translates a list of dimension intervals
@@ -40,7 +42,7 @@ import java.util.List;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class DimensionIntervalList extends IParseTreeNode {
+public class DimensionIntervalList extends IRasqlParseTreeNode {
 
     /**
      * Constructor for the class

@@ -600,13 +600,6 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	T visitReduceNumericalExpressionOperator(@NotNull wcpsParser.ReduceNumericalExpressionOperatorContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link wcpsParser#CoverageIdExpressionLabel}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCoverageIdExpressionLabel(@NotNull wcpsParser.CoverageIdExpressionLabelContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link wcpsParser#BooleanBinaryScalarLabel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -738,6 +731,13 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitWhereClauseLabel(@NotNull wcpsParser.WhereClauseLabelContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link wcpsParser#CoverageIdentifierExpressionLabel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCoverageIdentifierExpressionLabel(@NotNull wcpsParser.CoverageIdentifierExpressionLabelContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link wcpsParser#CoverageExpressionRangeConstructorLabel}.

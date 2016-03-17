@@ -21,12 +21,14 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 import org.apache.commons.lang3.StringUtils;
 import petascope.util.CrsUtil;
 import petascope.wcps.metadata.CoverageInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Class to translate an encoded coverage
@@ -42,7 +44,7 @@ import java.util.List;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class EncodedCoverage extends IParseTreeNode {
+public class EncodedCoverage extends IRasqlParseTreeNode {
 
     /**
      * Constructor for the class
@@ -51,7 +53,7 @@ public class EncodedCoverage extends IParseTreeNode {
      * @param format             the format in which to encode it
      * @param otherParams        parameters to be supplied to the encoder
      */
-    public EncodedCoverage(IParseTreeNode coverageExpression, String format, List<String> otherParams) {
+    public EncodedCoverage(IRasqlParseTreeNode coverageExpression, String format, List<String> otherParams) {
         this.format = format;
         this.coverageExpression = coverageExpression;
         // ticket1241 returns error when otherParams is NULL, then need to initialize if the params are empty
@@ -123,7 +125,7 @@ public class EncodedCoverage extends IParseTreeNode {
     }
 
     private final String format;
-    private final IParseTreeNode coverageExpression;
+    private final IRasqlParseTreeNode coverageExpression;
     private final List<String> otherParams;
     private final static String TEMPLATE = "encode($arrayOps, $format $otherParams)";
     private final static String NON_GDAL_OPERATION_TEMPLATE = "$operation($arrayOps $otherParams)";

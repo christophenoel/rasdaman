@@ -21,11 +21,13 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 import petascope.core.CoverageMetadata;
 import petascope.wcps.metadata.CoverageInfo;
 import petascope.wcps2.error.managed.processing.IncompatibleCoverageExpressionException;
 import petascope.wcps2.error.managed.processing.WCPSProcessingError;
 import petascope.wcps2.metadata.Coverage;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translation node from wcps coverage list to rasql for the LogicalCOverageExpressions
@@ -50,9 +52,9 @@ public class BinaryCoverageExpression extends CoverageExpression {
      * @param operator the operator of the expression
      * @param secondCoverageExpr the second coverage expression
      */
-    public BinaryCoverageExpression(IParseTreeNode firstCoverageExpr, String operator, IParseTreeNode secondCoverageExpr) {
-        this.firstCoverageExpr = (CoverageExpression) firstCoverageExpr;
-        this.secondCoverageExpr = (CoverageExpression) secondCoverageExpr;
+    public BinaryCoverageExpression(CoverageExpression firstCoverageExpr, String operator, CoverageExpression secondCoverageExpr) {
+        this.firstCoverageExpr = firstCoverageExpr;
+        this.secondCoverageExpr = secondCoverageExpr;
         this.operator = operator;
         checkConsistency();
         addChild(firstCoverageExpr);

@@ -29,6 +29,9 @@ import petascope.wcps2.error.managed.processing.WCPSProcessingError;
 import petascope.wcps2.translator.WcpsTranslator;
 
 import java.io.*;
+import petascope.wcps2.error.managed.processing.NotRasqlException;
+import petascope.wcps2.result.WCPSMetaResult;
+import petascope.wcps2.result.WCPSResult;
 
 /**
  * This class provides a method to run wcps queries directly from the cli. Useful for testing and debugging
@@ -75,9 +78,14 @@ public class Wcps {
     public static String run(String query) throws WCPSProcessingError {
         long startTime = System.nanoTime();
         WcpsTranslator translator = new WcpsTranslator(query);
-        String rasqlQuery = translator.translate();
+        WCPSResult wcpsResult = translator.translate();
+        // Check if wcpsResult return directly meta value then should not execute the result
+        if(wcpsResult instanceof WCPSMetaResult) {
+            throw new NotRasqlException(query, wcpsResult.getResult());
+        }   
         long endTime = System.nanoTime();
-        return rasqlQuery;
+        // Return Rasql query
+        return wcpsResult.getResult();
     }
 
     /**

@@ -21,6 +21,10 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.query.WcpsQuery;
+import petascope.wcps2.query.WcpsMetaQuery;
+import petascope.wcps2.parse.treenode.IParseTreeNode;
+import java.util.List;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -31,6 +35,9 @@ import petascope.wcps2.parser.wcpsEvaluator;
 import petascope.wcps2.parser.wcpsLexer;
 import petascope.wcps2.parser.wcpsParser;
 import petascope.wcps2.processor.ProcessorRegistry;
+import petascope.wcps2.result.WCPSMetaResult;
+import petascope.wcps2.result.WCPSRasqlResult;
+import petascope.wcps2.result.WCPSResult;
 
 /**
  * Class to translate a wcps query into a rasql query using the antlr generated parser and
@@ -51,12 +58,24 @@ public class WcpsTranslator {
     }
 
     /**
-     * Translates the wcps query into a rasql query
+     * Translates the wcps query into a rasql query or value
      *
      * @return the translated query
      */
-    public String translate() throws WCPSProcessingError {
-        return translateTreeToRasql(preprocessTree(getTranslationTree(wcpsQuery)));
+    public WCPSResult translate() throws WCPSProcessingError {
+        // First, return the translatedTree
+        IParseTreeNode translatedTree = preprocessTree(getTranslationTree(wcpsQuery));
+
+        WcpsQuery wcpsQuery = (WcpsQuery)(translatedTree);        
+        // Check *ReturnClause* to know should return *Rasql* or *Meta value* (default: translatedTree is WcpsQuery)
+        if(wcpsQuery.getReturnClause().isReturnRasql()) {            
+            // it should return *Rasql*
+            return translateTree(wcpsQuery);
+        }
+        else {
+            // it should return *Meta value*
+            return translateTree(new WcpsMetaQuery(wcpsQuery));
+        }
     }
 
     /**
@@ -80,14 +99,27 @@ public class WcpsTranslator {
     }
 
     /**
-     * Translates a translation tree to rasql query by calling the toRasql method.
+     * Translates a translated tree to *rasql* in WcsQuery by calling the toRasql method.
      *
      * @param translationTree
      * @return
      */
-    private String translateTreeToRasql(IParseTreeNode translationTree) throws WCPSProcessingError {
-        String rasqlQuery = translationTree.toRasql();
-        return rasqlQuery;
+    public WCPSResult translateTree(WcpsQuery translatedTree) throws WCPSProcessingError {
+        WCPSRasqlResult rasqlResult = new WCPSRasqlResult();
+        rasqlResult.setRasqlQuery(translatedTree);
+        return rasqlResult;
+    }
+    
+    /**
+     * Translates a translated tree to *value* in WcsMetaQuery method.
+     *
+     * @param translatedTree
+     * @return
+     */
+    public WCPSResult translateTree(WcpsMetaQuery translatedTree) throws WCPSProcessingError {
+        WCPSMetaResult metaResult = new WCPSMetaResult();
+        metaResult.setMetaResult(translatedTree);
+        return metaResult;
     }
 
     /**

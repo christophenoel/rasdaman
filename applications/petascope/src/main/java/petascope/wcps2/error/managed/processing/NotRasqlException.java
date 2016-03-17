@@ -1,3 +1,4 @@
+
 /*
  * This file is part of rasdaman community.
  *
@@ -14,44 +15,24 @@
  * You should have received a copy of the GNU  General Public License
  * along with rasdaman community.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2003 - 2016 Peter Baumann / rasdaman GmbH.
+ * Copyright 2003 - 2014 Peter Baumann / rasdaman GmbH.
  *
  * For more information please see <http://www.rasdaman.org>
  * or contact Peter Baumann via <baumann@rasdaman.com>.
  */
-package petascope.wcps2.translator;
-
-import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
-
+package petascope.wcps2.error.managed.processing;
 /**
- * Class to translate a boolean constant, e.g. true or false
- * <p/>
- * <code>
- * true
- * </code>
- * translates to
- * <code>
- * true
- * </code>
+ * Error exception for coverage axis lookup failure
  *
- * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
- * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
+ * @author <a href="mailto:b.phamhuu@jacobs-university.de">Bang Pham Huu</a>
  */
-public class BooleanConstant extends IRasqlParseTreeNode {
-
+public class NotRasqlException extends WCPSProcessingError {
     /**
      * Constructor for the class
-     *
-     * @param truthValue the boolean value in string format
+     * @param query WCPS query
+     * @param metaValue the Meta value (e.g idenfier(c) = mr)
      */
-    public BooleanConstant(String truthValue) {
-        this.truthValue = truthValue;
+    public NotRasqlException(String query, String metaValue) {
+        super("This WCPS query: " + query + " returns meta value: " + metaValue + ", not Rasql query.");
     }
-
-    @Override
-    public String toRasql() {
-        return truthValue;
-    }
-
-    public final String truthValue;
 }

@@ -21,6 +21,7 @@
  */
 package petascope.wcps2.processor;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 import petascope.wcps.metadata.DomainElement;
 import petascope.wcps2.metadata.Coverage;
 import petascope.wcps2.metadata.CoverageRegistry;

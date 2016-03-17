@@ -24,6 +24,7 @@ package petascope.wcps2.translator;
 import petascope.wcps2.error.managed.processing.CoverageNotFoundException;
 import petascope.wcps2.error.managed.processing.WCPSProcessingError;
 import petascope.wcps2.metadata.CoverageRegistry;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translation node from wcps to rasql for the for clause.
@@ -39,7 +40,7 @@ import petascope.wcps2.metadata.CoverageRegistry;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class ForClause extends IParseTreeNode {
+public class ForClause extends IRasqlParseTreeNode {
 
     /**
      * Constructor for the class
@@ -83,6 +84,24 @@ public class ForClause extends IParseTreeNode {
     @Override
     protected String nodeInformation() {
         return new StringBuilder("(").append(coverageIterator).append(",").append(coverageName).append(")").toString();
+    }
+    
+    /**
+     * Return the coverageIterator (e.g: $c)
+     * @return String
+     */
+    public String getCoverageIterator()
+    {
+        return coverageIterator;
+    }
+
+    /**
+     *  Return the coverageName (e.g: mr)
+     * @return String
+     */
+    public String getCoverageName()
+    {
+        return coverageName;
     }
 
     private final String coverageIterator;

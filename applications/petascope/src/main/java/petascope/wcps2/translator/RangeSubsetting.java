@@ -24,6 +24,7 @@ package petascope.wcps2.translator;
 import org.apache.commons.lang3.math.NumberUtils;
 import petascope.exceptions.PetascopeException;
 import petascope.wcps2.error.managed.processing.RangeFieldNotFound;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translation node from wcps to rasql for range subsetting.
@@ -64,6 +65,6 @@ public class RangeSubsetting extends CoverageExpression {
     }
 
     private String rangeType;
-    private IParseTreeNode coverageExp;
+    private IRasqlParseTreeNode coverageExp;
     private final String TEMPLATE = "$coverageExp.$rangeType";
 }

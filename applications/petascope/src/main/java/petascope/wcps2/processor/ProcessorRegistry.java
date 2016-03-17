@@ -22,7 +22,7 @@
 package petascope.wcps2.processor;
 
 import petascope.wcps2.metadata.CoverageRegistry;
-import petascope.wcps2.translator.IParseTreeNode;
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +68,7 @@ public class ProcessorRegistry {
         processors.add(new CrsSubsetComputer());
         processors.add(new PetascopeAxesToRasdamanAxesTranslator());
         processors.add(new IntervalVariablesTranslator());
+        processors.add(new CoverageIdentifierProcessor());
     }
 
     private final List<IProcessor> processors = new ArrayList<IProcessor>();

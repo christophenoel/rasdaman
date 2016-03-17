@@ -24,6 +24,8 @@ package petascope.wcps2.translator;
 
 import java.util.ArrayList;
 import java.util.List;
+import petascope.wcps.grammar.IParseTreeNode;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translation node from wcps coverage list to rasql for the general condenser
@@ -45,7 +47,7 @@ import java.util.List;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class GeneralCondenser extends IParseTreeNode {
+public class GeneralCondenser extends IRasqlParseTreeNode {
 
     /**
      * Constructor for the class
@@ -55,7 +57,7 @@ public class GeneralCondenser extends IParseTreeNode {
      * @param whereClause   a where clause that selects the pixels
      * @param values        the values that have to be condensed
      */
-    public GeneralCondenser(String operation, ArrayList<AxisIterator> axisIterators, IParseTreeNode whereClause, IParseTreeNode values) {
+    public GeneralCondenser(String operation, ArrayList<AxisIterator> axisIterators, IRasqlParseTreeNode whereClause, IRasqlParseTreeNode values) {
         this.operation = operation;
         this.axisIterators = axisIterators;
         for (AxisIterator i : axisIterators) {
@@ -95,7 +97,7 @@ public class GeneralCondenser extends IParseTreeNode {
         return axisIteratorVariableNames;
     }
 
-    public IParseTreeNode getValues() {
+    public IRasqlParseTreeNode getValues() {
         return values;
     }
 
@@ -107,8 +109,8 @@ public class GeneralCondenser extends IParseTreeNode {
     private String operation;
     private DimensionIntervalList dimensionIntervalList;
     private ArrayList<String> axisIteratorVariableNames = new ArrayList<String>();
-    private IParseTreeNode values;
-    private IParseTreeNode whereClause;
+    private IRasqlParseTreeNode values;
+    private IRasqlParseTreeNode whereClause;
     private final static String TEMPLATE = "CONDENSE $operation OVER $iter in [$intervals] WHERE $whereClause USING $values";
     private final static String INTERVAL_SEPARATOR = ",";
 }

@@ -21,6 +21,9 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation class for boolean unary scalar expression.
  * Example
@@ -34,8 +37,8 @@ package petascope.wcps2.translator;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class BooleanUnaryScalarExpression extends IParseTreeNode {
-    public BooleanUnaryScalarExpression(String operand, IParseTreeNode scalarExpression) {
+public class BooleanUnaryScalarExpression extends IRasqlParseTreeNode {
+    public BooleanUnaryScalarExpression(String operand, IRasqlParseTreeNode scalarExpression) {
         this.operand = operand;
         this.scalarExpression = scalarExpression;
         addChild(scalarExpression);
@@ -47,6 +50,6 @@ public class BooleanUnaryScalarExpression extends IParseTreeNode {
     }
 
     private final String operand;
-    private final IParseTreeNode scalarExpression;
+    private final IRasqlParseTreeNode scalarExpression;
     private static final String TEMPLATE = "$operand($scalarExpression)";
 }

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU  General Public License
  * along with rasdaman community.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2003 - 2016 Peter Baumann / rasdaman GmbH.
+ * Copyright 2003 - 2014 Peter Baumann / rasdaman GmbH.
  *
  * For more information please see <http://www.rasdaman.org>
  * or contact Peter Baumann via <baumann@rasdaman.com>.
  */
-package petascope.wcps2.translator;
+package petascope.wcps2.parse.treenode;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,15 +31,9 @@ import java.util.List;
  *
  * @author <a href="alex@flanche.net">Alex Dumitru</a>
  * @author <a href="vlad@flanche.net">Vlad Merticariu</a>
+ * @author <a href="bphamhuu@jacobs-university.de">Bang Pham Huu</a>
  */
 public abstract class IParseTreeNode {
-
-    /**
-     * Translates this WCPS parse node element into its rasql equivalent.
-     *
-     * @return the translation of the wcps lang into rasql
-     */
-    public abstract String toRasql();
 
     /**
      * Adds a new child to the parse tree
@@ -49,7 +43,6 @@ public abstract class IParseTreeNode {
     public void addChild(IParseTreeNode child) {
         children.add(child);
     }
-
 
     /**
      * Returns all the direct descendants of this node
@@ -91,7 +84,6 @@ public abstract class IParseTreeNode {
         return toIndentedString(1);
 
     }
-
 
     /**
      * Returns any relevant node information that can be used in logs / debugs in the format "(info1, info2, info3)"

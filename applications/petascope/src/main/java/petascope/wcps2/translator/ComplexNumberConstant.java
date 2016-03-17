@@ -21,6 +21,8 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translator class for complex numbers.
  *
@@ -37,7 +39,7 @@ package petascope.wcps2.translator;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class ComplexNumberConstant extends IParseTreeNode {
+public class ComplexNumberConstant extends IRasqlParseTreeNode {
 
   public ComplexNumberConstant(String re, String im) {
     this.re = re;

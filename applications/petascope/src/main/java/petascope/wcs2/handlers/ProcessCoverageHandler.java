@@ -41,6 +41,12 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.util.Map;
+import petascope.wcps.grammar.IParseTreeNode;
+import petascope.wcps2.executor.WcpsExecutor;
+import petascope.wcps2.executor.WcpsExecutorFactory;
+import petascope.wcps2.result.WCPSMetaResult;
+import petascope.wcps2.result.WCPSRasqlResult;
+import petascope.wcps2.result.WCPSResult;
 
 /**
  * Handler for the Process Coverages Extension
@@ -147,27 +153,12 @@ public class ProcessCoverageHandler extends AbstractRequestHandler<ProcessCovera
      * @todo Implement it as soon as WCPS2.0 fixes are done.
      */
     private Response handleWCPS2Request(ProcessCoverageRequest request) throws WCSException {
-        WcpsTranslator translator = new WcpsTranslator(request.getQuery());
-        String rasqlQuery = translator.translate();
-        RasQueryResult res = null;
-        String mime = "";
         byte[] result = new byte[0];
-        try {
-            res = new RasQueryResult(RasUtil.executeRasqlQuery(rasqlQuery));
-
-            if (!res.getMdds().isEmpty() || !res.getScalars().isEmpty()) {
-                for (String s : res.getScalars()) {
-                    result = s.getBytes(Charset.forName("UTF-8"));
-                }
-                for (byte[] bs : res.getMdds()) {
-                    result = bs;
-                }
-            } else {
-
-            }
-        } catch (Exception ex) {
-            throw new WCSException(ExceptionCode.SemanticError, ex);
-        }
+        String mime = "";
+        WcpsTranslator translator = new WcpsTranslator(request.getQuery());
+        WCPSResult wcpsResult = translator.translate();
+        WcpsExecutor executor = WcpsExecutorFactory.getExecutor(wcpsResult);
+        result = executor.execute(wcpsResult);
         return new Response(result, null, mime);
     }
 

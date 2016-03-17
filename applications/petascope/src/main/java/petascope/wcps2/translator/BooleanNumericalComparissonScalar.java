@@ -21,6 +21,8 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation class for Boolean numerical comparisons.
  * <code>
@@ -36,7 +38,7 @@ package petascope.wcps2.translator;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class BooleanNumericalComparissonScalar extends IParseTreeNode {
+public class BooleanNumericalComparissonScalar extends IRasqlParseTreeNode {
 
 
     /**
@@ -46,7 +48,7 @@ public class BooleanNumericalComparissonScalar extends IParseTreeNode {
      * @param rightComparisonParameter the right operand
      * @param operator                 the comparisson operator
      */
-    public BooleanNumericalComparissonScalar(IParseTreeNode leftComparisonParameter, IParseTreeNode rightComparisonParameter, String operator) {
+    public BooleanNumericalComparissonScalar(IRasqlParseTreeNode leftComparisonParameter, IRasqlParseTreeNode rightComparisonParameter, String operator) {
         this.leftComparisonParameter = leftComparisonParameter;
         this.rightComparisonParameter = rightComparisonParameter;
         this.operator = operator;
@@ -61,8 +63,8 @@ public class BooleanNumericalComparissonScalar extends IParseTreeNode {
             .replace("$rightOperand", rightComparisonParameter.toRasql());
     }
 
-    private final IParseTreeNode leftComparisonParameter;
-    private final IParseTreeNode rightComparisonParameter;
+    private final IRasqlParseTreeNode leftComparisonParameter;
+    private final IRasqlParseTreeNode rightComparisonParameter;
     private final String operator;
     private static final String TEMPLATE = " $leftOperand $operator $rightOperand ";
 }

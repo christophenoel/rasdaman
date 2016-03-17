@@ -22,6 +22,7 @@
 package petascope.wcps2.translator;
 
 import java.util.*;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translation node from wcps coverage list to rasql for the coverage constructor
@@ -49,7 +50,7 @@ public class CoverageConstructor extends CoverageBuilder {
      * @param axisIterators the iterators to be applied to the coverage
      * @param values        the values to build the coverage
      */
-    public CoverageConstructor(String coverageName, ArrayList<AxisIterator> axisIterators, IParseTreeNode values) {
+    public CoverageConstructor(String coverageName, ArrayList<AxisIterator> axisIterators, IRasqlParseTreeNode values) {
         this.coverageName = coverageName;
         this.axisIterators = axisIterators;
         for (AxisIterator i : axisIterators) {
@@ -81,7 +82,7 @@ public class CoverageConstructor extends CoverageBuilder {
         return "(" + coverageName + ")";
     }
 
-    private IParseTreeNode values;
+    private IRasqlParseTreeNode values;
     private final String TEMPLATE = "MARRAY $iter in [$intervals] VALUES $values";
     private final String INTERVAL_SEPARATOR = ",";
     private ArrayList<String> axisIteratorVariableNames = new ArrayList<String>();
@@ -90,7 +91,7 @@ public class CoverageConstructor extends CoverageBuilder {
         return axisIteratorVariableNames;
     }
 
-    public IParseTreeNode getValues() {
+    public IRasqlParseTreeNode getValues() {
         return values;
     }
 }

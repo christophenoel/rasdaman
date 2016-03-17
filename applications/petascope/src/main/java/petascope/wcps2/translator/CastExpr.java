@@ -37,9 +37,9 @@ import petascope.wcps2.error.managed.processing.WCPSProcessingError;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class CastExpr extends IParseTreeNode {
+public class CastExpr extends CoverageExpression {
 
-    public CastExpr(String rangeType, IParseTreeNode coverageExp) {
+    public CastExpr(String rangeType, CoverageExpression coverageExp) {
         this.rangeType = rangeType;
         this.coverageExp = coverageExp;
         addChild(coverageExp);
@@ -52,6 +52,6 @@ public class CastExpr extends IParseTreeNode {
     }
 
     private String rangeType;
-    private IParseTreeNode coverageExp;
+    private CoverageExpression coverageExp;
     private final String TEMPLATE = "($rangeType) $coverageExp";
 }

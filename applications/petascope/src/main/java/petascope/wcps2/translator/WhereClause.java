@@ -21,6 +21,9 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation node from wcps to rasql for the where clause.
  * Example:
@@ -35,9 +38,9 @@ package petascope.wcps2.translator;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class WhereClause extends IParseTreeNode {
+public class WhereClause extends IRasqlParseTreeNode {
 
-    public WhereClause(IParseTreeNode booleanExpression) {
+    public WhereClause(IRasqlParseTreeNode booleanExpression) {
         this.booleanExpression = booleanExpression;
         addChild(booleanExpression);
     }
@@ -47,6 +50,6 @@ public class WhereClause extends IParseTreeNode {
         return TEMPLATE.replace("$booleanExpression", booleanExpression.toRasql());
     }
 
-    private final IParseTreeNode booleanExpression;
+    private final IRasqlParseTreeNode booleanExpression;
     private static final String TEMPLATE = " WHERE $booleanExpression ";
 }

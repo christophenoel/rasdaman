@@ -23,6 +23,7 @@ package petascope.wcps2.translator;
 
 import petascope.wcps2.error.managed.processing.InvalidSlicingException;
 import petascope.wcps2.metadata.Subset;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 import static petascope.wcs2.parsers.subsets.DimensionSubset.ASTERISK;
 
 /**
@@ -36,7 +37,7 @@ import static petascope.wcs2.parsers.subsets.DimensionSubset.ASTERISK;
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  * @author <a href="mailto:b.phamhuu@jacobs-university.de">Bang Pham Huu</a>
  */
-public class SubsetDimension extends IParseTreeNode implements Comparable {
+public class SubsetDimension extends IRasqlParseTreeNode implements Comparable {
     /**
     * Constructor for the trimming of class
     *

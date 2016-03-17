@@ -21,6 +21,7 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;

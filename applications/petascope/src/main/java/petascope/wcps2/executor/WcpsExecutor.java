@@ -14,44 +14,29 @@
  * You should have received a copy of the GNU  General Public License
  * along with rasdaman community.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2003 - 2016 Peter Baumann / rasdaman GmbH.
+ * Copyright 2003 - 2014 Peter Baumann / rasdaman GmbH.
  *
  * For more information please see <http://www.rasdaman.org>
  * or contact Peter Baumann via <baumann@rasdaman.com>.
  */
-package petascope.wcps2.translator;
 
-import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+package petascope.wcps2.executor;
+
+import petascope.exceptions.WCSException;
+import petascope.wcps2.result.WCPSResult;
 
 /**
- * Class to translate a boolean constant, e.g. true or false
- * <p/>
- * <code>
- * true
- * </code>
- * translates to
- * <code>
- * true
- * </code>
- *
- * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
- * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
+ * Execute Rasql query / Meta value and return result.
+ * 
+ * @author <a href="mailto:bphamhuux@jacobs-university.de">Bang Pham Huu</a>
  */
-public class BooleanConstant extends IRasqlParseTreeNode {
-
+public interface WcpsExecutor {
+    
     /**
-     * Constructor for the class
-     *
-     * @param truthValue the boolean value in string format
+     * Execute the Rasql query / Meta value
+     * @param wcpsResult
+     * @return result in byte[];
+     * @throws petascope.exceptions.WCSException
      */
-    public BooleanConstant(String truthValue) {
-        this.truthValue = truthValue;
-    }
-
-    @Override
-    public String toRasql() {
-        return truthValue;
-    }
-
-    public final String truthValue;
+    public byte[] execute(WCPSResult wcpsResult) throws WCSException;    
 }

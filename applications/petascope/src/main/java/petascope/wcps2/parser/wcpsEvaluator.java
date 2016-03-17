@@ -21,6 +21,8 @@
  */
 package petascope.wcps2.parser;
 
+import petascope.wcps2.query.WcpsQuery;
+import petascope.wcps2.parse.treenode.IParseTreeNode;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +36,7 @@ import static petascope.wcs2.parsers.subsets.DimensionSlice.ASTERISK;
 import java.util.*;
 import org.slf4j.LoggerFactory;
 import petascope.wcps2.error.managed.processing.InvalidSlicingException;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Class that implements the parsing rules described in wcps.g4
@@ -52,13 +55,13 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx) {
-        IParseTreeNode forClauseList = visit(ctx.forClauseList());
+        ForClauseList forClauseList = (ForClauseList)visit(ctx.forClauseList());
         //only visit the for clause if it exists
-        IParseTreeNode whereClause = null;
+        WhereClause whereClause = null;
         if (ctx.whereClause() != null) {
-            whereClause = visit(ctx.whereClause());
+            whereClause = (WhereClause)visit(ctx.whereClause());
         }
-        IParseTreeNode returnClause = visit(ctx.returnClause());
+        ReturnClause returnClause = (ReturnClause)visit(ctx.returnClause());
         return new WcpsQuery(forClauseList, whereClause, returnClause);
     }
 
@@ -69,16 +72,16 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitForClauseListLabel(@NotNull wcpsParser.ForClauseListLabelContext ctx) {
-        ArrayList<IParseTreeNode> forClauses = new ArrayList<IParseTreeNode>();
+        ArrayList<IRasqlParseTreeNode> forClauses = new ArrayList<IRasqlParseTreeNode>();
         for (wcpsParser.ForClauseContext currentClause : ctx.forClause()) {
-            forClauses.add(visit(currentClause));
+            forClauses.add((IRasqlParseTreeNode)visit(currentClause));
         }
         return new ForClauseList(forClauses);
     }
 
     @Override
     public IParseTreeNode visitReturnClauseLabel(@NotNull wcpsParser.ReturnClauseLabelContext ctx) {
-        return new ReturnClause(visit(ctx.processingExpression()));
+        return new ReturnClause((IParseTreeNode)visit(ctx.processingExpression()));
     }
 
     @Override
@@ -107,7 +110,7 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
             }
         }
 
-        return new EncodedCoverage(coverageExpression, format, otherParams);
+        return new EncodedCoverage((CoverageExpression)coverageExpression, format, otherParams);
     }
 
     @Override
@@ -118,18 +121,18 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitCoverageExpressionLogicLabel(@NotNull wcpsParser.CoverageExpressionLogicLabelContext ctx) {
-        return new BinaryCoverageExpression(visit(ctx.coverageExpression(0)), ctx.booleanOperator().getText(), visit(ctx.coverageExpression(1)));
+        return new BinaryCoverageExpression((CoverageExpression)visit(ctx.coverageExpression(0)), ctx.booleanOperator().getText(), (CoverageExpression)visit(ctx.coverageExpression(1)));
     }
 
     @Override
     public IParseTreeNode visitCoverageExpressionArithmeticLabel(@NotNull wcpsParser.CoverageExpressionArithmeticLabelContext ctx) {
-        return new BinaryCoverageExpression(visit(ctx.coverageExpression(0)), ctx.coverageArithmeticOperator().getText(), visit(ctx.coverageExpression(1)));
+        return new BinaryCoverageExpression((CoverageExpression)visit(ctx.coverageExpression(0)), ctx.coverageArithmeticOperator().getText(), (CoverageExpression)visit(ctx.coverageExpression(1)));
     }
 
     @Override
     public IParseTreeNode visitCoverageExpressionOverlayLabel(@NotNull wcpsParser.CoverageExpressionOverlayLabelContext ctx) {
         //invert the order of the operators since WCPS overlay order is the opposite of the one in rasql
-        return new BinaryCoverageExpression(visit(ctx.coverageExpression(1)), ctx.OVERLAY().getText(), visit(ctx.coverageExpression(0)));
+        return new BinaryCoverageExpression((CoverageExpression)visit(ctx.coverageExpression(1)), ctx.OVERLAY().getText(), (CoverageExpression)visit(ctx.coverageExpression(0)));
     }
 
     @Override
@@ -165,22 +168,22 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
         for (wcpsParser.AxisIteratorContext i : ctx.axisIterator()) {
             intervalList.add((AxisIterator) visit(i));
         }
-        return new CoverageConstructor(ctx.IDENTIFIER().getText(), intervalList, visit(ctx.coverageExpression()));
+        return new CoverageConstructor(ctx.IDENTIFIER().getText(), intervalList, (IRasqlParseTreeNode)visit(ctx.coverageExpression()));
     }
 
     @Override
     public IParseTreeNode visitUnaryCoverageArithmeticExpressionLabel(@NotNull wcpsParser.UnaryCoverageArithmeticExpressionLabelContext ctx) {
-        return new UnaryArithmeticExpression(ctx.unaryArithmeticExpressionOperator().getText(), visit(ctx.coverageExpression()));
+        return new UnaryArithmeticExpression(ctx.unaryArithmeticExpressionOperator().getText(), (IRasqlParseTreeNode)visit(ctx.coverageExpression()));
     }
 
     @Override
     public IParseTreeNode visitTrigonometricExpressionLabel(@NotNull wcpsParser.TrigonometricExpressionLabelContext ctx) {
-        return new UnaryArithmeticExpression(ctx.trigonometricOperator().getText(), visit(ctx.coverageExpression()));
+        return new UnaryArithmeticExpression(ctx.trigonometricOperator().getText(), (CoverageExpression)visit(ctx.coverageExpression()));
     }
 
     @Override
     public IParseTreeNode visitExponentialExpressionLabel(@NotNull wcpsParser.ExponentialExpressionLabelContext ctx) {
-        return new UnaryArithmeticExpression(ctx.exponentialExpressionOperator().getText(), visit(ctx.coverageExpression()));
+        return new UnaryArithmeticExpression(ctx.exponentialExpressionOperator().getText(), (CoverageExpression)visit(ctx.coverageExpression()));
     }
     
     @Override
@@ -195,12 +198,12 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitBitUnaryBooleanExpressionLabel(@NotNull wcpsParser.BitUnaryBooleanExpressionLabelContext ctx) {
-        return new UnaryBooleanExpression((CoverageExpression)visit(ctx.coverageExpression()), (CoverageExpression)visit(ctx.numericalScalarExpression()));
+        return new UnaryBooleanExpression((CoverageExpression)visit(ctx.coverageExpression()), (IRasqlParseTreeNode)visit(ctx.numericalScalarExpression()));
     }
 
     @Override
     public IParseTreeNode visitCastExpressionLabel(@NotNull wcpsParser.CastExpressionLabelContext ctx) {
-        return new CastExpression(StringUtils.join(ctx.rangeType().IDENTIFIER(), " "), visit(ctx.coverageExpression()));
+        return new CastExpression(StringUtils.join(ctx.rangeType().IDENTIFIER(), " "), (CoverageExpression)visit(ctx.coverageExpression()));
     }
 
     @Override
@@ -220,52 +223,52 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitCoverageExpressionCoverageLabel(@NotNull wcpsParser.CoverageExpressionCoverageLabelContext ctx) {
-        return new ParenthesesCoverageExpression(visit(ctx.coverageExpression()));
+        return new ParenthesesCoverageExpression((CoverageExpression)visit(ctx.coverageExpression()));
     }
 
     @Override
     public IParseTreeNode visitWhereClauseLabel(@NotNull wcpsParser.WhereClauseLabelContext ctx) {
-        return new WhereClause(visit(ctx.booleanScalarExpression()));
+        return new WhereClause((IRasqlParseTreeNode)visit(ctx.booleanScalarExpression()));
     }
 
     @Override
     public IParseTreeNode visitBooleanUnaryScalarLabel(@NotNull wcpsParser.BooleanUnaryScalarLabelContext ctx) {
-        return new BooleanUnaryScalarExpression(ctx.booleanUnaryOperator().getText(), visit(ctx.booleanScalarExpression()));
+        return new BooleanUnaryScalarExpression(ctx.booleanUnaryOperator().getText(), (IRasqlParseTreeNode)visit(ctx.booleanScalarExpression()));
     }
 
     @Override
     public IParseTreeNode visitBooleanNumericalComparisonScalarLabel(@NotNull wcpsParser.BooleanNumericalComparisonScalarLabelContext ctx) {
-        return new BooleanNumericalComparissonScalar(visit(ctx.numericalScalarExpression(0)), visit(ctx.numericalScalarExpression(1)), ctx.numericalComparissonOperator().getText());
+        return new BooleanNumericalComparissonScalar((IRasqlParseTreeNode)visit(ctx.numericalScalarExpression(0)), (IRasqlParseTreeNode)visit(ctx.numericalScalarExpression(1)), ctx.numericalComparissonOperator().getText());
     }
 
     @Override
     public IParseTreeNode visitReduceBooleanExpressionLabel(@NotNull wcpsParser.ReduceBooleanExpressionLabelContext ctx) {
-        return new ReduceExpression(ctx.reduceBooleanExpressionOperator().getText(), visit(ctx.coverageExpression()));
+        return new ReduceExpression(ctx.reduceBooleanExpressionOperator().getText(), (CoverageExpression)visit(ctx.coverageExpression()));
     }
 
     @Override
     public IParseTreeNode visitCoverageExpressionComparissonLabel(@NotNull wcpsParser.CoverageExpressionComparissonLabelContext ctx) {
-        return new BinaryCoverageExpression(visit(ctx.coverageExpression(0)), ctx.numericalComparissonOperator().getText(), visit(ctx.coverageExpression(1)));
+        return new BinaryCoverageExpression((CoverageExpression)visit(ctx.coverageExpression(0)), ctx.numericalComparissonOperator().getText(), (CoverageExpression)visit(ctx.coverageExpression(1)));
     }
 
     @Override
     public IParseTreeNode visitBooleanBinaryScalarLabel(@NotNull wcpsParser.BooleanBinaryScalarLabelContext ctx) {
-        return new BinaryCoverageExpression(visit(ctx.booleanScalarExpression(0)), ctx.booleanOperator().getText(), visit(ctx.booleanScalarExpression(1)));
+        return new BinaryCoverageExpression((CoverageExpression)visit(ctx.booleanScalarExpression(0)), ctx.booleanOperator().getText(), (CoverageExpression)visit(ctx.booleanScalarExpression(1)));
     }
 
     @Override
     public IParseTreeNode visitNumericalUnaryScalarExpressionLabel(@NotNull wcpsParser.NumericalUnaryScalarExpressionLabelContext ctx) {
-        return new UnaryArithmeticExpression(ctx.numericalUnaryOperation().getText(), visit(ctx.numericalScalarExpression()));
+        return new UnaryArithmeticExpression(ctx.numericalUnaryOperation().getText(), (IRasqlParseTreeNode)visit(ctx.numericalScalarExpression()));
     }
 
     @Override
     public IParseTreeNode visitNumericalTrigonometricScalarExpressionLabel(@NotNull wcpsParser.NumericalTrigonometricScalarExpressionLabelContext ctx) {
-        return new UnaryArithmeticExpression(ctx.trigonometricOperator().getText(), visit(ctx.numericalScalarExpression()));
+        return new UnaryArithmeticExpression(ctx.trigonometricOperator().getText(), (IRasqlParseTreeNode)visit(ctx.numericalScalarExpression()));
     }
 
     @Override
     public IParseTreeNode visitNumericalBinaryScalarExpressionLabel(@NotNull wcpsParser.NumericalBinaryScalarExpressionLabelContext ctx) {
-        return new BinaryCoverageExpression(visit(ctx.numericalScalarExpression(0)), ctx.numericalOperator().getText(), visit(ctx.numericalScalarExpression(1)));
+        return new BinaryCoverageExpression((CoverageExpression)visit(ctx.numericalScalarExpression(0)), ctx.numericalOperator().getText(), (CoverageExpression)visit(ctx.numericalScalarExpression(1)));
     }
 
     @Override
@@ -275,7 +278,7 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitReduceNumericalExpressionLabel(@NotNull wcpsParser.ReduceNumericalExpressionLabelContext ctx) {
-        return new ReduceExpression(ctx.reduceNumericalExpressionOperator().getText(), visit(ctx.coverageExpression()));
+        return new ReduceExpression(ctx.reduceNumericalExpressionOperator().getText(), (CoverageExpression)visit(ctx.coverageExpression()));
     }
 
     @Override
@@ -288,7 +291,7 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
         if (ctx.booleanScalarExpression() != null) {
             whereClause = visit(ctx.booleanScalarExpression());
         }
-        return new GeneralCondenser(ctx.condenseExpressionOperator().getText(), intervalList, whereClause, visit(ctx.coverageExpression()));
+        return new GeneralCondenser(ctx.condenseExpressionOperator().getText(), intervalList, (IRasqlParseTreeNode)whereClause, (CoverageExpression)visit(ctx.coverageExpression()));
     }
 
     @Override
@@ -321,14 +324,14 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
     @Override
     public IParseTreeNode visitCoverageExpressionShorthandTrimLabel(@NotNull wcpsParser.CoverageExpressionShorthandTrimLabelContext ctx) {
         DimensionIntervalList dimensionIntList = (DimensionIntervalList) visit(ctx.dimensionIntervalList());
-        return new TrimExpression(visit(ctx.coverageExpression()), dimensionIntList);
+        return new TrimExpression((CoverageExpression)visit(ctx.coverageExpression()), dimensionIntList);
     }
     
     @Override
     // ticket:1246
     public IParseTreeNode visitCoverageExpressionTrimCoverageLabel(@NotNull wcpsParser.CoverageExpressionTrimCoverageLabelContext ctx) {
         DimensionIntervalList dimensionIntList = (DimensionIntervalList) visit(ctx.dimensionIntervalList());
-        return new TrimExpression(visit(ctx.coverageExpression()), dimensionIntList);
+        return new TrimExpression((CoverageExpression)visit(ctx.coverageExpression()), dimensionIntList);
     }
 
     @Override
@@ -401,12 +404,18 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitCoverageExpressionShorthandSliceLabel(@NotNull wcpsParser.CoverageExpressionShorthandSliceLabelContext ctx) {
-        return new TrimExpression(visit(ctx.coverageExpression()), (DimensionIntervalList) visit(ctx.dimensionPointList()));
+        return new TrimExpression((CoverageExpression)visit(ctx.coverageExpression()), (DimensionIntervalList) visit(ctx.dimensionPointList()));
     }
 
     @Override
     public IParseTreeNode visitStringScalarExpressionLabel(@NotNull wcpsParser.StringScalarExpressionLabelContext ctx) {
         return new StringScalar(ctx.STRING_LITERAL().getText());
+    }
+    
+    @Override
+    public IParseTreeNode visitCoverageIdentifierExpressionLabel(@NotNull wcpsParser.CoverageIdentifierExpressionLabelContext ctx) {
+        // NOTE: it only handle "coverageVariableName" not "coverageExpression"
+        return new CoverageIdentifier(ctx.coverageVariableName().getText());
     }
 
     @Override
@@ -421,7 +430,7 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
 
     @Override
     public IParseTreeNode visitCoverageExpressionSliceLabel(@NotNull wcpsParser.CoverageExpressionSliceLabelContext ctx) {
-        return new TrimExpression(visit(ctx.coverageExpression()), (DimensionIntervalList) visit(ctx.dimensionPointList()));
+        return new TrimExpression((CoverageExpression)visit(ctx.coverageExpression()), (DimensionIntervalList) visit(ctx.dimensionPointList()));
     }
 
     private CoverageRegistry coverageRegistry;

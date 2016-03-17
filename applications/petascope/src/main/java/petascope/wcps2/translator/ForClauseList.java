@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import petascope.wcps2.error.managed.processing.WCPSProcessingError;
 
 import java.util.ArrayList;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Translation node from wcps coverage list to rasql for the FOR clause.
@@ -42,7 +43,7 @@ import java.util.ArrayList;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class ForClauseList extends IParseTreeNode {
+public class ForClauseList extends IRasqlParseTreeNode {
 
     /**
      * Constructor for the class
@@ -50,8 +51,8 @@ public class ForClauseList extends IParseTreeNode {
      * @param forClauses a list of the for clauses
      * @throws WCPSProcessingError
      */
-    public ForClauseList(ArrayList<IParseTreeNode> forClauses) throws WCPSProcessingError {
-        for (IParseTreeNode i : forClauses) {
+    public ForClauseList(ArrayList<IRasqlParseTreeNode> forClauses) throws WCPSProcessingError {
+        for (IRasqlParseTreeNode i : forClauses) {
             this.forClauses.add(i.toRasql());
             addChild(i);
         }

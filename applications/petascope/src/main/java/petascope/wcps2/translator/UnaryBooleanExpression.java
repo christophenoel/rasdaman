@@ -21,6 +21,8 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation node from wcps to rasql for unary boolean expressions.
  * Example:
@@ -40,25 +42,25 @@ package petascope.wcps2.translator;
 public class UnaryBooleanExpression extends CoverageExpression {
 
     // not($c)
-  public UnaryBooleanExpression(CoverageExpression coverageExp) {
+  public UnaryBooleanExpression(IRasqlParseTreeNode coverageExp){
     this.coverageExp = coverageExp;
     addChild(coverageExp);
   }
 
   // bit($c, scalar)
-  public UnaryBooleanExpression(CoverageExpression coverageExp, CoverageExpression scalarExpression) {
+  public UnaryBooleanExpression(IRasqlParseTreeNode coverageExp, IRasqlParseTreeNode scalarExp){
     this.coverageExp = coverageExp;
-    this.scalarExpression = scalarExpression;
+    this.scalarExp = scalarExp;
     addChild(coverageExp);
-    addChild(scalarExpression);
+    addChild(scalarExp);
   }
 
   @Override
   public String toRasql() {
     String template;
     //if realNumberConst exists, we deal with a bit operation
-    if (this.scalarExpression != null) {
-        template = TEMPLATE_BIT.replace("$coverageExp", this.coverageExp.toRasql()).replace("$scalarExp", this.scalarExpression.toRasql());
+    if (this.scalarExp != null) {
+        template = TEMPLATE_BIT.replace("$coverageExp", this.coverageExp.toRasql()).replace("$scalarExp", this.scalarExp.toRasql());
     } else {
         //not expression
         template = TEMPLATE_NOT.replace("$coverageExp", this.coverageExp.toRasql());
@@ -66,8 +68,8 @@ public class UnaryBooleanExpression extends CoverageExpression {
     return template;
   }
 
-   private CoverageExpression coverageExp;
-   private CoverageExpression scalarExpression;
+   private IRasqlParseTreeNode coverageExp;
+   private IRasqlParseTreeNode scalarExp;
    private final String TEMPLATE_NOT = "NOT($coverageExp)";
    private final String TEMPLATE_BIT = "BIT($coverageExp, $scalarExp)";
 }

@@ -21,6 +21,8 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation class for trim expression in wcps.
  * <code>
@@ -38,7 +40,7 @@ package petascope.wcps2.translator;
  */
 public class TrimExpression extends CoverageExpression {
 
-    public TrimExpression(IParseTreeNode coverageExpression, DimensionIntervalList dimensionIntervalList) {
+    public TrimExpression(IRasqlParseTreeNode coverageExpression, DimensionIntervalList dimensionIntervalList) {
         this.coverageExpression = coverageExpression;
         this.dimensionIntervalList = dimensionIntervalList;
         addChild(coverageExpression);
@@ -69,7 +71,7 @@ public class TrimExpression extends CoverageExpression {
         return dimensionIntervalList;
     }
 
-    private final IParseTreeNode coverageExpression;
+    private final IRasqlParseTreeNode coverageExpression;
     private final DimensionIntervalList dimensionIntervalList;
     private final static String TEMPLATE = "$covExp[$dimensionIntervalList]";
 }

@@ -49,13 +49,13 @@ public class wcpsParser extends Parser {
 		RULE_stringOperator = 13, RULE_stringScalarExpression = 14, RULE_starExpression = 15, 
 		RULE_numericalScalarExpression = 16, RULE_complexNumberConstant = 17, 
 		RULE_numericalOperator = 18, RULE_numericalUnaryOperation = 19, RULE_trigonometricOperator = 20, 
-		RULE_getComponentExpression = 21, RULE_coverageIdExpression = 22, RULE_describeCoverageExpression = 23, 
-		RULE_encodedCoverageExpression = 24, RULE_decodeCoverageExpression = 25, 
-		RULE_coverageExpression = 26, RULE_coverageArithmeticOperator = 27, RULE_unaryArithmeticExpressionOperator = 28, 
-		RULE_unaryArithmeticExpression = 29, RULE_trigonometricExpression = 30, 
-		RULE_exponentialExpressionOperator = 31, RULE_exponentialExpression = 32, 
-		RULE_unaryPowerExpression = 33, RULE_unaryBooleanExpression = 34, RULE_rangeType = 35, 
-		RULE_castExpression = 36, RULE_fieldName = 37, RULE_rangeConstructorExpression = 38, 
+		RULE_getComponentExpression = 21, RULE_coverageIdentifierExpression = 22, 
+		RULE_describeCoverageExpression = 23, RULE_encodedCoverageExpression = 24, 
+		RULE_decodeCoverageExpression = 25, RULE_coverageExpression = 26, RULE_coverageArithmeticOperator = 27, 
+		RULE_unaryArithmeticExpressionOperator = 28, RULE_unaryArithmeticExpression = 29, 
+		RULE_trigonometricExpression = 30, RULE_exponentialExpressionOperator = 31, 
+		RULE_exponentialExpression = 32, RULE_unaryPowerExpression = 33, RULE_unaryBooleanExpression = 34, 
+		RULE_rangeType = 35, RULE_castExpression = 36, RULE_fieldName = 37, RULE_rangeConstructorExpression = 38, 
 		RULE_crsTransformExpression = 39, RULE_dimensionPointList = 40, RULE_dimensionPointElement = 41, 
 		RULE_dimensionIntervalList = 42, RULE_dimensionIntervalElement = 43, RULE_dimensionCrsList = 44, 
 		RULE_dimensionCrsElement = 45, RULE_fieldInterpolationList = 46, RULE_fieldInterpolationListElement = 47, 
@@ -72,7 +72,7 @@ public class wcpsParser extends Parser {
 		"booleanUnaryOperator", "booleanConstant", "booleanOperator", "numericalComparissonOperator", 
 		"stringOperator", "stringScalarExpression", "starExpression", "numericalScalarExpression", 
 		"complexNumberConstant", "numericalOperator", "numericalUnaryOperation", 
-		"trigonometricOperator", "getComponentExpression", "coverageIdExpression", 
+		"trigonometricOperator", "getComponentExpression", "coverageIdentifierExpression", 
 		"describeCoverageExpression", "encodedCoverageExpression", "decodeCoverageExpression", 
 		"coverageExpression", "coverageArithmeticOperator", "unaryArithmeticExpressionOperator", 
 		"unaryArithmeticExpression", "trigonometricExpression", "exponentialExpressionOperator", 
@@ -1546,11 +1546,11 @@ public class wcpsParser extends Parser {
 	}
 
 	public static class GetComponentExpressionContext extends ParserRuleContext {
-		public CoverageIdExpressionContext coverageIdExpression() {
-			return getRuleContext(CoverageIdExpressionContext.class,0);
-		}
 		public DescribeCoverageExpressionContext describeCoverageExpression() {
 			return getRuleContext(DescribeCoverageExpressionContext.class,0);
+		}
+		public CoverageIdentifierExpressionContext coverageIdentifierExpression() {
+			return getRuleContext(CoverageIdentifierExpressionContext.class,0);
 		}
 		public GetComponentExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1572,7 +1572,7 @@ public class wcpsParser extends Parser {
 			case ID:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(269); coverageIdExpression();
+				setState(269); coverageIdentifierExpression();
 				}
 				break;
 			case DESCRIBE_COVERAGE:
@@ -1596,37 +1596,37 @@ public class wcpsParser extends Parser {
 		return _localctx;
 	}
 
-	public static class CoverageIdExpressionContext extends ParserRuleContext {
-		public CoverageIdExpressionContext(ParserRuleContext parent, int invokingState) {
+	public static class CoverageIdentifierExpressionContext extends ParserRuleContext {
+		public CoverageIdentifierExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_coverageIdExpression; }
+		@Override public int getRuleIndex() { return RULE_coverageIdentifierExpression; }
 	 
-		public CoverageIdExpressionContext() { }
-		public void copyFrom(CoverageIdExpressionContext ctx) {
+		public CoverageIdentifierExpressionContext() { }
+		public void copyFrom(CoverageIdentifierExpressionContext ctx) {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class CoverageIdExpressionLabelContext extends CoverageIdExpressionContext {
+	public static class CoverageIdentifierExpressionLabelContext extends CoverageIdentifierExpressionContext {
 		public TerminalNode ID() { return getToken(wcpsParser.ID, 0); }
 		public TerminalNode RIGHT_PARANTHESIS() { return getToken(wcpsParser.RIGHT_PARANTHESIS, 0); }
 		public TerminalNode LEFT_PARANTHESIS() { return getToken(wcpsParser.LEFT_PARANTHESIS, 0); }
 		public CoverageVariableNameContext coverageVariableName() {
 			return getRuleContext(CoverageVariableNameContext.class,0);
 		}
-		public CoverageIdExpressionLabelContext(CoverageIdExpressionContext ctx) { copyFrom(ctx); }
+		public CoverageIdentifierExpressionLabelContext(CoverageIdentifierExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof wcpsVisitor ) return ((wcpsVisitor<? extends T>)visitor).visitCoverageIdExpressionLabel(this);
+			if ( visitor instanceof wcpsVisitor ) return ((wcpsVisitor<? extends T>)visitor).visitCoverageIdentifierExpressionLabel(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final CoverageIdExpressionContext coverageIdExpression() throws RecognitionException {
-		CoverageIdExpressionContext _localctx = new CoverageIdExpressionContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_coverageIdExpression);
+	public final CoverageIdentifierExpressionContext coverageIdentifierExpression() throws RecognitionException {
+		CoverageIdentifierExpressionContext _localctx = new CoverageIdentifierExpressionContext(_ctx, getState());
+		enterRule(_localctx, 44, RULE_coverageIdentifierExpression);
 		try {
-			_localctx = new CoverageIdExpressionLabelContext(_localctx);
+			_localctx = new CoverageIdentifierExpressionLabelContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(273); match(ID);

@@ -40,7 +40,7 @@ import petascope.wcps2.util.CastDataTypeConverter;
  */
 public class CastExpression extends CoverageExpression {
 
-    public CastExpression(String rangeType, IParseTreeNode coverageExp) {
+    public CastExpression(String rangeType, CoverageExpression coverageExp) {
         this.rangeType = rangeType;
         this.coverageExp = coverageExp;
         addChild(coverageExp);
@@ -54,6 +54,6 @@ public class CastExpression extends CoverageExpression {
     }
 
     private String rangeType;
-    private IParseTreeNode coverageExp;
+    private CoverageExpression coverageExp;
     private final String TEMPLATE = "($rangeType) $coverageExp";
 }

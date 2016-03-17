@@ -21,6 +21,8 @@
  */
 package petascope.wcps2.translator;
 
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
+
 /**
  * Translation node from wcps interval  rasql
  * Example:
@@ -35,7 +37,7 @@ package petascope.wcps2.translator;
  * @author <a href="mailto:alex@flanche.net">Alex Dumitru</a>
  * @author <a href="mailto:vlad@flanche.net">Vlad Merticariu</a>
  */
-public class IntervalExpression extends IParseTreeNode {
+public class IntervalExpression extends IRasqlParseTreeNode {
 
     /**
      * Constructor for the  class

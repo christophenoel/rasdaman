@@ -165,17 +165,17 @@ trigonometricOperator: SIN | COS | TAN | SINH | COSH | TANH | ARCSIN | ARCCOS | 
  * Example:
  *  See the rules below;
  */
-getComponentExpression: coverageIdExpression
+getComponentExpression: coverageIdentifierExpression
                       | describeCoverageExpression;
 
 /**
  * Example:
- * id($c);
+ * identifier($c);
  *
  * Query:
- * for $c in (someCov) return id($c)
+ * for $c in (someCov) return identifier($c)
  */
-coverageIdExpression: ID LEFT_PARANTHESIS coverageVariableName RIGHT_PARANTHESIS                                        #CoverageIdExpressionLabel;
+coverageIdentifierExpression: ID LEFT_PARANTHESIS coverageVariableName RIGHT_PARANTHESIS                                        #CoverageIdentifierExpressionLabel;
 
 /**
  * Example:

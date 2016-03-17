@@ -23,6 +23,7 @@ package petascope.wcps2.translator;
 
 import java.util.HashMap;
 import java.util.Map;
+import petascope.wcps2.parse.treenode.IRasqlParseTreeNode;
 
 /**
  * Class to translate a reduce boolean expression to rasql
@@ -42,7 +43,7 @@ import java.util.Map;
 public class ReduceExpression extends CoverageExpression {
 
 
-    public ReduceExpression(String reduceOperation, IParseTreeNode reduceParameter) {
+    public ReduceExpression(String reduceOperation, CoverageExpression reduceParameter) {
         this.reduceOperation = reduceOperation;
         this.reduceParameter = reduceParameter;
         addChild(reduceParameter);
@@ -55,7 +56,7 @@ public class ReduceExpression extends CoverageExpression {
     }
 
     private final String reduceOperation;
-    private final IParseTreeNode reduceParameter;
+    private final IRasqlParseTreeNode reduceParameter;
     private final static String TEMPLATE = " $reduceOperation($reduceParameter) ";
     private final static Map<String, String> operationTranslator = new HashMap<String, String>();
 
