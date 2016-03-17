@@ -221,7 +221,9 @@ coverageExpression: coverageExpression booleanOperator coverageExpression       
                   | coverageConstructorExpression                                                                       #CoverageExpressionConstructorLabel
                   | decodeCoverageExpression                                                                            #CoverageExpressionDecodeLabel
                   | coverageExpression LEFT_BRACKET dimensionIntervalList RIGHT_BRACKET                                 #CoverageExpressionShorthandTrimLabel
-                  | TRIM LEFT_PARANTHESIS coverageExpression COMMA dimensionIntervalList RIGHT_PARANTHESIS              #CoverageExpressionTrimCoverageLabel
+                  | TRIM LEFT_PARANTHESIS coverageExpression COMMA LEFT_BRACE dimensionIntervalList RIGHT_BRACE
+                    RIGHT_PARANTHESIS              
++#CoverageExpressionTrimCoverageLabel
                   | coverageExpression LEFT_BRACKET dimensionPointList RIGHT_BRACKET                                    #CoverageExpressionShorthandSliceLabel
                   | SLICE LEFT_PARANTHESIS coverageExpression COMMA LEFT_BRACE dimensionPointList RIGHT_BRACE RIGHT_PARANTHESIS                #CoverageExpressionSliceLabel
                   | EXTEND LEFT_PARANTHESIS coverageExpression COMMA LEFT_BRACE dimensionIntervalList RIGHT_BRACE RIGHT_PARANTHESIS            #CoverageExpressionExtendLabel

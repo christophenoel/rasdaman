@@ -323,6 +323,13 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
         DimensionIntervalList dimensionIntList = (DimensionIntervalList) visit(ctx.dimensionIntervalList());
         return new TrimExpression(visit(ctx.coverageExpression()), dimensionIntList);
     }
+    
+    @Override
+    // ticket:1246
+    public IParseTreeNode visitCoverageExpressionTrimCoverageLabel(@NotNull wcpsParser.CoverageExpressionTrimCoverageLabelContext ctx) {
+        DimensionIntervalList dimensionIntList = (DimensionIntervalList) visit(ctx.dimensionIntervalList());
+        return new TrimExpression(visit(ctx.coverageExpression()), dimensionIntList);
+    }
 
     @Override
     public IParseTreeNode visitCoverageConstantExpressionLabel(@NotNull wcpsParser.CoverageConstantExpressionLabelContext ctx) {
