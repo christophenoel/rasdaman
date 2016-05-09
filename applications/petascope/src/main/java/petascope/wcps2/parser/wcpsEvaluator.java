@@ -417,6 +417,12 @@ public class wcpsEvaluator extends wcpsBaseVisitor<IParseTreeNode> {
         // NOTE: it only handle "coverageVariableName" not "coverageExpression"
         return new CoverageIdentifier(ctx.coverageVariableName().getText());
     }
+    
+    @Override
+    public IParseTreeNode visitCoverageCrsSetExpressionLabel(@NotNull wcpsParser.CoverageCrsSetExpressionLabelContext ctx) {
+        // NOTE: it only handle "coverageVariableName" not "coverageExpression"
+        return new CoverageCrsSet(ctx.coverageVariableName().getText());
+    }
 
     @Override
     public IParseTreeNode visitStarExpressionLabel(@NotNull wcpsParser.StarExpressionLabelContext ctx) {

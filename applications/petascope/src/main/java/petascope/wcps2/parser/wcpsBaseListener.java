@@ -1187,6 +1187,19 @@ public class wcpsBaseListener implements wcpsListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterCoverageCrsSetExpressionLabel(@NotNull wcpsParser.CoverageCrsSetExpressionLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitCoverageCrsSetExpressionLabel(@NotNull wcpsParser.CoverageCrsSetExpressionLabelContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterCRSIntervalExpressionLabel(@NotNull wcpsParser.CRSIntervalExpressionLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1291,19 +1304,6 @@ public class wcpsBaseListener implements wcpsListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterReduceBooleanExpressionOperator(@NotNull wcpsParser.ReduceBooleanExpressionOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1311,6 +1311,19 @@ public class wcpsBaseListener implements wcpsListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitReduceBooleanExpressionOperator(@NotNull wcpsParser.ReduceBooleanExpressionOperatorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

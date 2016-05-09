@@ -72,7 +72,8 @@ public class ReturnClause extends IParseTreeNode {
     public boolean isReturnRasql()
     {
         // identifier(c) = mr
-        if(this.processingExpr instanceof CoverageIdentifier) {
+        if(this.processingExpr instanceof CoverageIdentifier
+            || this.processingExpr instanceof CoverageCrsSet) {
             return false;
         }
         return true;

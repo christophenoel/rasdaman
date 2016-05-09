@@ -738,6 +738,14 @@ public class wcpsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements w
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
+	@Override public T visitCoverageCrsSetExpressionLabel(@NotNull wcpsParser.CoverageCrsSetExpressionLabelContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
 	@Override public T visitCRSIntervalExpressionLabel(@NotNull wcpsParser.CRSIntervalExpressionLabelContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -802,7 +810,7 @@ public class wcpsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements w
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx) { return visitChildren(ctx); }
+	@Override public T visitReduceBooleanExpressionOperator(@NotNull wcpsParser.ReduceBooleanExpressionOperatorContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -810,7 +818,7 @@ public class wcpsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements w
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitReduceBooleanExpressionOperator(@NotNull wcpsParser.ReduceBooleanExpressionOperatorContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

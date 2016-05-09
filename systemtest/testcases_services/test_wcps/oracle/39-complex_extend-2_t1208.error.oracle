@@ -6,7 +6,7 @@
         <ows:ExceptionText>Runtime error while processing request</ows:ExceptionText>
     </ows:Exception>
     <ows:Exception exceptionCode="RuntimeError">
-        <ows:ExceptionText>petascope.wcps2.error.managed.processing.WCPSProcessingError : A parsing error occurred at position=1:40. Offending symbol is=[@13,40:40='i',&lt;78&gt;,1:40]. Parser message=missing '{' at 'i'.</ows:ExceptionText>
+        <ows:ExceptionText>petascope.wcps2.error.managed.processing.WCPSProcessingError : A parsing error occurred at position=1:40. Offending symbol is=[@13,40:40='i',&lt;79&gt;,1:40]. Parser message=missing '{' at 'i'.</ows:ExceptionText>
     </ows:Exception>
 
 </ows:ExceptionReport>

@@ -69,6 +69,7 @@ public class ProcessorRegistry {
         processors.add(new PetascopeAxesToRasdamanAxesTranslator());
         processors.add(new IntervalVariablesTranslator());
         processors.add(new CoverageIdentifierProcessor());
+        processors.add(new CoverageCrsSetProcessor());
     }
 
     private final List<IProcessor> processors = new ArrayList<IProcessor>();

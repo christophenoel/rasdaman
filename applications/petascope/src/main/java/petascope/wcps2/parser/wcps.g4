@@ -166,6 +166,7 @@ trigonometricOperator: SIN | COS | TAN | SINH | COSH | TANH | ARCSIN | ARCCOS | 
  *  See the rules below;
  */
 getComponentExpression: coverageIdentifierExpression
+          	      | coverageCrsSetExpression
                       | describeCoverageExpression;
 
 /**
@@ -176,6 +177,17 @@ getComponentExpression: coverageIdentifierExpression
  * for $c in (someCov) return identifier($c)
  */
 coverageIdentifierExpression: ID LEFT_PARANTHESIS coverageVariableName RIGHT_PARANTHESIS                                        #CoverageIdentifierExpressionLabel;
+
+
+/**
+ * Example:
+ * crsset($c);
+ *
+ * Query:
+ * for $c in (someCov) return crsset($c)
+ */
+coverageCrsSetExpression: CRSSET LEFT_PARANTHESIS coverageVariableName RIGHT_PARANTHESIS                                        #CoverageCrsSetExpressionLabel;
+
 
 /**
  * Example:

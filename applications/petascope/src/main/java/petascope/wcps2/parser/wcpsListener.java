@@ -999,6 +999,17 @@ public interface wcpsListener extends ParseTreeListener {
 	void exitUnaryArithmeticExpressionOperator(@NotNull wcpsParser.UnaryArithmeticExpressionOperatorContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link wcpsParser#CoverageCrsSetExpressionLabel}.
+	 * @param ctx the parse tree
+	 */
+	void enterCoverageCrsSetExpressionLabel(@NotNull wcpsParser.CoverageCrsSetExpressionLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link wcpsParser#CoverageCrsSetExpressionLabel}.
+	 * @param ctx the parse tree
+	 */
+	void exitCoverageCrsSetExpressionLabel(@NotNull wcpsParser.CoverageCrsSetExpressionLabelContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link wcpsParser#CRSIntervalExpressionLabel}.
 	 * @param ctx the parse tree
 	 */
@@ -1087,17 +1098,6 @@ public interface wcpsListener extends ParseTreeListener {
 	void exitGetComponentExpression(@NotNull wcpsParser.GetComponentExpressionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link wcpsParser#WcpsQueryLabel}.
-	 * @param ctx the parse tree
-	 */
-	void enterWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link wcpsParser#WcpsQueryLabel}.
-	 * @param ctx the parse tree
-	 */
-	void exitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link wcpsParser#reduceBooleanExpressionOperator}.
 	 * @param ctx the parse tree
 	 */
@@ -1107,6 +1107,17 @@ public interface wcpsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitReduceBooleanExpressionOperator(@NotNull wcpsParser.ReduceBooleanExpressionOperatorContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link wcpsParser#WcpsQueryLabel}.
+	 * @param ctx the parse tree
+	 */
+	void enterWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link wcpsParser#WcpsQueryLabel}.
+	 * @param ctx the parse tree
+	 */
+	void exitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link wcpsParser#ReduceBooleanExpressionLabel}.

@@ -642,6 +642,13 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	T visitUnaryArithmeticExpressionOperator(@NotNull wcpsParser.UnaryArithmeticExpressionOperatorContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link wcpsParser#CoverageCrsSetExpressionLabel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCoverageCrsSetExpressionLabel(@NotNull wcpsParser.CoverageCrsSetExpressionLabelContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link wcpsParser#CRSIntervalExpressionLabel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -698,18 +705,18 @@ public interface wcpsVisitor<T> extends ParseTreeVisitor<T> {
 	T visitGetComponentExpression(@NotNull wcpsParser.GetComponentExpressionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link wcpsParser#WcpsQueryLabel}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link wcpsParser#reduceBooleanExpressionOperator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitReduceBooleanExpressionOperator(@NotNull wcpsParser.ReduceBooleanExpressionOperatorContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link wcpsParser#WcpsQueryLabel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWcpsQueryLabel(@NotNull wcpsParser.WcpsQueryLabelContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link wcpsParser#ReduceBooleanExpressionLabel}.
